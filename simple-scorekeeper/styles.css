@@ -1,0 +1,19 @@
+.highlight {
+	background-color: yellow;
+}
+
+
+h1 {
+	color: blue;
+	font-size: 50;
+}
+
+p {
+	width: 25em;
+}
+
+#btn-reset {
+	background-color: red;
+
+}
+
