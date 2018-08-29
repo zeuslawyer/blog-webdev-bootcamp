@@ -1,5 +1,12 @@
 #container {
-	background: gray;
+	/* background: gray; */
 	width: 40%;
 	margin: 0 auto;
+	border: 2px solid green;
+}
+
+/* todo strikethrough */
+.todo-completed {
+	color: gray;
+	text-decoration: line-through;
 }
