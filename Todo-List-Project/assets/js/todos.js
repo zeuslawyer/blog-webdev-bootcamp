@@ -26,16 +26,6 @@ $("input[type='text']").keypress(function(event){
 	}
 })
 
-
-// //alternate row shading
-// $('li:even').css('background', '#00ffff');
-// // $('li:odd').css('background', '#bfff00');
-// $('ul').children().change(function(){
-// 	log('changed')
-// 	$('li:even').css('background', '#00ffff');
-// 	$('li:odd').css('background', '#bfff00');
-// });
-
 // console.log helper
 function log(...args) {
 	console.log(...args);
