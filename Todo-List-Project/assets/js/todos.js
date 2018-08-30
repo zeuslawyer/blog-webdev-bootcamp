@@ -18,15 +18,15 @@ $('ul#ul-main').on('click', 'span', function(event){
 
 //input listener - when enter pressed collect value and add to TODO list
 $("input[type='text']").keypress(function(event){
-	// log(event.which, ' was pressed!' + ' aint it dandy');
-	if(event.which === 13) {
-		var inputText = $(this).val();  //collect text input
-		$('ul#ul-main').append('<li><span>X</span> ' + inputText + '</li>');  //append it to the ul and create new li elem
+	var inputText = $(this).val();  //collect text input and check if not ''
+	if(event.which === 13 && inputText) {
+		$('ul#ul-main').append('<li><span><i class="far fa-trash-alt"></i></span> ' + inputText + '</li>');  //append it to the ul and create new li elem
 		$(this).val(''); //reset input field to blank text
 	}
 })
 
-// console.log helper
+
+// console.log helper function
 function log(...args) {
 	console.log(...args);
 }
