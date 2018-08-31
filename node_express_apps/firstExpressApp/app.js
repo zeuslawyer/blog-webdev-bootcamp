@@ -3,15 +3,18 @@ const app = express();
 
 
 app.get('/', function(req, res){
-    res.send('WASSUP!');
+    // res.send('<h1> WELCOME TO THE HOME PAGE</h1><p> <strong> We are glad you\'re here!</strong></p>'); 
+    res.render('home.ejs', {url: req.url});
 })
 
 app.get('/dog', function(req, res){
-    res.send('WOOFOOF!');
+    // res.send('WOOFOOF!');
+    res.render('home.ejs', {url: req.url});
 })
 
 app.get('/bye', function(req, res){
-    res.send('CIAO MAMI!!');
+    // res.send('CIAO MAMI!!');
+    res.render('home.ejs', {url: req.url});
 });
 
 app.get('/:param1/testing-params/:param2', function(req, res){
