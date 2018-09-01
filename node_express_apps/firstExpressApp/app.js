@@ -14,7 +14,7 @@ app.get('/dog', function(req, res){
 
 app.get('/bye', function(req, res){
     // res.send('CIAO MAMI!!');
-    res.render('home.ejs', {url: req.url});
+    res.render('home.ejs', {url: req.url, goodbye: true});
 });
 
 app.get('/:param1/testing-params/:param2', function(req, res){
