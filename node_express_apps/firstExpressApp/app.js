@@ -40,6 +40,7 @@ app.get('/:param1/pathvar /:param2', function(req, res){
 app.get('*', function(req, res){
     let path = req.url;
     res.status(404).render('404.ejs',  {path:path});
+    // res.render('404.ejs',  {path:path});
 })
 
 
