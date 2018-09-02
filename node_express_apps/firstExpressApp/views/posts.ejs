@@ -1,0 +1,24 @@
+
+<!-- will demo difference between  < % = and just  < % -->
+
+<H1 style="color: blue"> Here are the posts</H1>
+
+<!-- using just a regular for loop -->
+<h2> This one just uses a regular for loop with a counter to iterate over the posts</h2>
+
+<% for(i=0; i<posts.length; i++) { %>
+    <p>
+        Title: <strong> <a href ='#'><%= posts[i].title %> </strong></a>, by <%= posts[i].author %> 
+    </p>
+<% } %>  
+<hr>
+
+<!-- using a .forEach() method -->
+<h2> This one just uses a .forEach() loop to iterate over the posts</h2>
+<% posts.forEach( (post) => { %>
+    <p>
+        Title: <strong> <a href ='#'><%= post.title %> </strong></a>, by <%= post.author %> 
+    </p>
+<% }); %> 
+
+
