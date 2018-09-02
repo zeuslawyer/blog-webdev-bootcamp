@@ -1,9 +1,8 @@
 
 <!-- will demo difference between  < % = and just  < % -->
 
-<link rel="stylesheet" href="styles.css ">
-
-<H1 style="color: blue"> Here are the posts</H1>
+<% include partials/header.ejs %>
+<H1 > Here are the posts</H1>
 
 <!-- using just a regular for loop -->
 <h2> This one just uses a regular for loop with a counter to iterate over the posts</h2>
@@ -23,4 +22,4 @@
     </p>
 <% }); %> 
 
-
+<% include partials/footer.ejs %>
