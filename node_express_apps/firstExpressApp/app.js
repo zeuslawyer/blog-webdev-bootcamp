@@ -57,7 +57,6 @@ app.get('/test', function(req, res){
     var filePath = "./public/pages/test.html"
     // var resolvedPath = path.resolve(filePath);
     var resolvedPath = helpers.getAbsPath(filePath);
-    console.log(resolvedPath); //absolute path
     res.sendFile(resolvedPath);
 });
 
@@ -65,7 +64,6 @@ app.get('/test', function(req, res){
 app.get('/todos', function(req, res){
     var filePath = "./public/pages/todos.html"
     var resolvedPath = helpers.getAbsPath(filePath);
-    console.log('todos : ', resolvedPath); //absolute path
     res.sendFile(resolvedPath);
 });
 
