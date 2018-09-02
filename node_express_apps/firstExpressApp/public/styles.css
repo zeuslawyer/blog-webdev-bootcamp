@@ -2,3 +2,9 @@
 body {
     background-color: plum;
 } 
+
+
+
+#error-div {
+    color: red;
+}

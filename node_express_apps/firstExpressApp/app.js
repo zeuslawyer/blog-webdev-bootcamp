@@ -38,7 +38,8 @@ app.get('/:param1/pathvar /:param2', function(req, res){
 
 // default , catchall route
 app.get('*', function(req, res){
-    res.send('Hmmmm...there appears to be no such page. ');
+    let path = req.url;
+    res.status(404).render('404.ejs',  {path:path});
 })
 
 
