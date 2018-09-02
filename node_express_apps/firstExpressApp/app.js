@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var path = require('path');
+const helpers = require('./helpers.js');
+
 const app = express();
 
 let posts = [
@@ -55,7 +56,7 @@ app.get('/:param1/pathvar /:param2', function(req, res){
 app.get('/test', function(req, res){
     var filePath = "./public/pages/test.html"
     // var resolvedPath = path.resolve(filePath);
-    var resolvedPath = getAbsPath(filePath);
+    var resolvedPath = helpers.getAbsPath(filePath);
     console.log(resolvedPath); //absolute path
     res.sendFile(resolvedPath);
 });
@@ -63,7 +64,7 @@ app.get('/test', function(req, res){
 //static - todos imported from todos project with jquery and scripts
 app.get('/todos', function(req, res){
     var filePath = "./public/pages/todos.html"
-    var resolvedPath = getAbsPath(filePath);
+    var resolvedPath = helpers.getAbsPath(filePath);
     console.log('todos : ', resolvedPath); //absolute path
     res.sendFile(resolvedPath);
 });
@@ -82,6 +83,6 @@ app.listen(port, ()=>{
     console.log(`server running on port ${port}...`);
 })
 
-function getAbsPath(relPath) {
-    return path.resolve(relPath);
-}
+// function getAbsPath(relPath) {
+//     return path.resolve(relPath);
+// }
