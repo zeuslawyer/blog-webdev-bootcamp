@@ -1,0 +1,23 @@
+
+
+<% include partials/header.ejs %>
+
+
+<% if (url === '/' ) { %>
+    <h1>THIS IS THE <%= url %> PAGE</h1>
+<% } %>
+
+<% if (url === '/dog' ) { %>
+    <h1>THIS IS THE <%= url %> PAGE</h1>
+<% } %>
+
+<% if (url === '/bye' ) { %>
+    <h1>THIS IS THE <%= url %> PAGE</h1>
+<% } %>
+
+<p>Welcome.  Glad you got this far.</p>
+<p>The url you entered to get here is <%= url %> </p>
+
+<% include partials/footer.ejs %>
+
+

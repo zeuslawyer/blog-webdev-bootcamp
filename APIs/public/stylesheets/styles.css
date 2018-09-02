@@ -1,0 +1,15 @@
+
+body {
+    background-color: plum;
+    color: brown;
+    font-weight: 600;    
+} 
+
+h1 {
+    color: yellow;
+}
+
+#error-div {
+    color: red;
+}
+
