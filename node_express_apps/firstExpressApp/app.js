@@ -9,6 +9,8 @@ let posts = [
     {title: 'Frankie goes to Hollywood', author: 'Zp Keshavar'}
 ]
 
+app.use(express.static('public'));  //serve static assets in public dir
+
 app.get('/', function(req, res){
     // res.send('<h1> WELCOME TO THE HOME PAGE</h1><p> <strong> We are glad you\'re here!</strong></p>'); 
     res.render('home.ejs', {url: req.url});
