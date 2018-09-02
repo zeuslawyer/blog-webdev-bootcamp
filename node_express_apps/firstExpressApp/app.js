@@ -1,4 +1,5 @@
-var express = require('express');
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
 
@@ -8,8 +9,11 @@ let posts = [
     {title: 'I sometimes worry about the future', author: 'Zubin Pratap'},
     {title: 'Frankie goes to Hollywood', author: 'Zp Keshavar'}
 ]
+let friends = ["TJ", "Stuart", "Maggie", "Pippa", "Zorro"];
+
 
 app.use(express.static('public'));  //serve static assets in public dir
+app.use(bodyParser.urlencoded({extended:true}));
 
 app.get('/', function(req, res){
     // res.send('<h1> WELCOME TO THE HOME PAGE</h1><p> <strong> We are glad you\'re here!</strong></p>'); 
@@ -30,6 +34,17 @@ app.get('/posts', function(req, res){
     res.render('posts.ejs', {posts:posts})  
 });
 
+app.get('/friends', function(req, res){
+    res.status(200).render('form-add-friend.ejs', {friends:friends})  
+});
+
+app.post('/add-friend', function(req, res){
+    let friend = req.body.newfriend;
+    friends.push(friend);
+    res.status(200).redirect('/friends');
+});
+
+// route params and variables
 app.get('/:param1/pathvar /:param2', function(req, res){
     var param1 = req.params.param1;
     var param2= req.params.param2;
@@ -39,7 +54,8 @@ app.get('/:param1/pathvar /:param2', function(req, res){
 // default , catchall route
 app.get('*', function(req, res){
     let path = req.url;
-    res.status(404).render('404.ejs',  {path:path});
+    let errorMessage = 'Oooopsie. This page doesn\'t exist.';
+    res.status(404).render('404.ejs',  {path:path, errorMessage: errorMessage});
     // res.render('404.ejs',  {path:path});
 })
 
