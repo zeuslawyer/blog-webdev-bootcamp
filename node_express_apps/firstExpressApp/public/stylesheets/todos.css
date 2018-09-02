@@ -1,0 +1,93 @@
+body {
+	/* taken from uigradients.com */
+	background: #77A1D3;  /* fallback for old browsers */
+	background: -webkit-linear-gradient(to right, #E684AE, #79CBCA, #77A1D3);  /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(to right, #E684AE, #79CBCA, #77A1D3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+#container {
+	width: 40%;
+	margin: 100px auto;
+	background: #f7f7f7;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+	background: #2980b9;
+	color:white;
+	margin: 0;
+	padding: 10px 20px;
+	text-align: center;
+	font-size: 24px;
+	font-weight: normal;
+	text-transform: uppercase;
+}
+
+/* pencil add note icon */
+fa-pencil-alt {
+	float: right;
+
+}
+
+input {
+	border: 2px solid rgba(0, 0, 0, 0.0); /* added to make input box flush with list elems*/
+	font-size: 18px;
+	background-color: #f7f7f7;
+	color: #2980b9;
+	width: 100% ;  /* of parent */
+	padding: 13px 13px 13px 20px;
+	box-sizing: border-box ; /* special property to make boxes fit */
+}
+
+input:focus {
+	background: white;
+	border: 2px solid #2980b9;
+	outline: none;
+}
+
+ul {
+	list-style: none;  /*means no bullet points */
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	background: white;
+	height: 40px;
+	line-height: 40px;
+	/* color:#666; */
+	/* color: green; */
+	font-weight: 500;
+}
+
+/* alternate colors for every other list elem */
+li:nth-child(2n) {
+	background: #f7f7f7;
+}
+
+/* set trash can styling */
+span {
+	width:0;
+	height: 40px;
+	background: #e74c3c;
+	color: white;
+	margin-right: 20px;
+	text-align: center;
+	display: inline-block;
+	opacity: 0;
+}
+li:hover span{
+	width:40px;
+	transition: 0.2s linear;
+	opacity: 1.0;
+}
+
+/* LIST ITEM strikethrough */
+.todo-completed {
+	color: gray;
+	text-decoration: line-through;
+}

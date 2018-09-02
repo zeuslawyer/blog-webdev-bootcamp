@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var path = require('path');
 const app = express();
-
 
 let posts = [
     {title: 'Zubin missies Rowie', author: 'Zubin Pratap'},
@@ -51,12 +51,28 @@ app.get('/:param1/pathvar /:param2', function(req, res){
     res.send(`YOU USED ROUTE PARAMS TO GET HERE! Specifically, you used ${param1} as param1 and ${param2} as param2, to make the url ${req.url}!`);
 });
 
+//Static - test page 
+app.get('/test', function(req, res){
+    var filePath = "./public/pages/test.html"
+    // var resolvedPath = path.resolve(filePath);
+    var resolvedPath = getAbsPath(filePath);
+    console.log(resolvedPath); //absolute path
+    res.sendFile(resolvedPath);
+});
+
+//static - todos imported from todos project with jquery and scripts
+app.get('/todos', function(req, res){
+    var filePath = "./public/pages/todos.html"
+    var resolvedPath = getAbsPath(filePath);
+    console.log('todos : ', resolvedPath); //absolute path
+    res.sendFile(resolvedPath);
+});
+
 // default , catchall route
 app.get('*', function(req, res){
     let path = req.url;
     let errorMessage = 'Oooopsie. This page doesn\'t exist.';
     res.status(404).render('404.ejs',  {path:path, errorMessage: errorMessage});
-    // res.render('404.ejs',  {path:path});
 })
 
 
@@ -65,3 +81,7 @@ let port = process.env.PORT || 3000
 app.listen(port, ()=>{
     console.log(`server running on port ${port}...`);
 })
+
+function getAbsPath(relPath) {
+    return path.resolve(relPath);
+}
