@@ -1,0 +1,9 @@
+<% include partials/header %>
+
+<h1>/parking is working</h1>
+
+<% data.forEach(function(obj){ %>
+    <li style="color:antiquewhite; font-weight: 400"> <%= obj.bay_id %> at [<%= obj.location.coordinates.toString() %>] is  <%= obj.status  %></li>
+<% }); %>
+
+<% include partials/footer %>

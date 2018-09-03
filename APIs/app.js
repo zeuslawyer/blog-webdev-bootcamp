@@ -1,7 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const app = express();
+const request = require('request');
+const url = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=100';
 
+const app = express();
 
 let posts = [
     {title: 'Zubin missies Rowie', author: 'Zubin Pratap'},
@@ -11,24 +13,26 @@ let posts = [
 ]
 let friends = ["TJ", "Stuart", "Maggie", "Pippa", "Zorro"];
 
-
 app.use(express.static('public'));  //serve static assets in public dir
 app.use(bodyParser.urlencoded({extended:true}));
+
 
 app.get('/', function(req, res){
     // res.send('<h1> WELCOME TO THE HOME PAGE</h1><p> <strong> We are glad you\'re here!</strong></p>'); 
     res.render('home.ejs', {url: req.url});
 })
 
-app.get('/dog', function(req, res){
-    // res.send('WOOFOOF!');
-    res.render('home.ejs', {url: req.url});
+app.get('/parking', function(req, res){
+    request(url, function(error, response, body){
+        if(!error && response.statusCode ==200) {
+            let data = JSON.parse(body);
+            res.render('parking.ejs', {data : data});
+        } else {
+            render404(req, res);
+        }
+    })    
+    // res.render('parking.ejs');
 })
-
-app.get('/bye', function(req, res){
-    // res.send('CIAO MAMI!!');
-    res.render('home.ejs', {url: req.url, goodbye: true});
-});
 
 app.get('/posts', function(req, res){
     res.render('posts.ejs', {posts:posts})  
@@ -53,10 +57,8 @@ app.get('/:param1/pathvar /:param2', function(req, res){
 
 // default , catchall route
 app.get('*', function(req, res){
-    let path = req.url;
-    let errorMessage = 'Oooopsie. This page doesn\'t exist.';
-    res.status(404).render('404.ejs',  {path:path, errorMessage: errorMessage});
-    // res.render('404.ejs',  {path:path});
+    render404(req, res);
+
 })
 
 
@@ -65,3 +67,9 @@ let port = process.env.PORT || 3000
 app.listen(port, ()=>{
     console.log(`server running on port ${port}...`);
 })
+
+function render404(request, response) {
+    let path = request.url;
+    let errorMessage = 'Oooopsie. This page doesn\'t exist.';
+    response.status(404).render('404.ejs',  {path:path, errorMessage: errorMessage});
+}
