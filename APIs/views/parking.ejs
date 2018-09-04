@@ -6,4 +6,10 @@
     <li style="color:antiquewhite; font-weight: 400"> <%= obj.bay_id %> at [<%= obj.location.coordinates.toString() %>] is  <%= obj.status  %></li>
 <% }); %>
 
+<form action="/search" method="GET"> 
+  <input type="text" name="bay_id" placeholder="enter a Bay ID">
+  <input type="submit">  
+</form>
+
+
 <% include partials/footer %>

@@ -34,6 +34,23 @@ app.get('/parking', function(req, res){
     // res.render('parking.ejs');
 })
 
+app.get('/search?', function(req, res){
+    console.log('bay ID is: ', req.query.bay_id, req.url)
+    const endpoint = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=10000&bay_id='+req.query.bay_id;
+    console.log(endpoint)
+    request(endpoint, function(error, response, data){
+        if(!error && response.statusCode==200) {
+            var parsedBody = JSON.parse(data)
+            console.log('parsedBody is: ', parsedBody)
+            res.render('home.ejs', {result: parsedBody, url: req.url})
+        } else {
+            console.log('ERROR getting data! ', error);
+        }
+    })
+    // res.send('<h1> WELCOME TO THE HOME PAGE</h1><p> <strong> We are glad you\'re here!</strong></p>'); 
+    // res.render('home.ejs', {url: req.url});
+})
+
 app.get('/posts', function(req, res){
     res.render('posts.ejs', {posts:posts})  
 });
