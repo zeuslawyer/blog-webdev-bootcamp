@@ -1,15 +1,19 @@
 <% include partials/header %>
 
 <h1>/parking is working</h1>
+<p>Look for a specific Bay ID?</p>
+<form action="/search" method="GET"> 
+    <input type="text" name="bay_id" placeholder="enter a Bay ID">
+    <input type="submit">  
+</form>
 
+<br/>
+<p>A quick snapshot of available parking spaces by Bay ID are: </p>
 <% data.forEach(function(obj){ %>
     <li style="color:antiquewhite; font-weight: 400"> <%= obj.bay_id %> at [<%= obj.location.coordinates.toString() %>] is  <%= obj.status  %></li>
 <% }); %>
 
-<form action="/search" method="GET"> 
-  <input type="text" name="bay_id" placeholder="enter a Bay ID">
-  <input type="submit">  
-</form>
+
 
 
 <% include partials/footer %>

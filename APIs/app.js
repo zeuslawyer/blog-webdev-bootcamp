@@ -34,17 +34,19 @@ app.get('/parking', function(req, res){
     // res.render('parking.ejs');
 })
 
-app.get('/search?', function(req, res){
-    console.log('bay ID is: ', req.query.bay_id, req.url)
+app.get('/search', function(req, res){
+    console.log(req.query.bay_id);
     const endpoint = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=10000&bay_id='+req.query.bay_id;
-    console.log(endpoint)
     request(endpoint, function(error, response, data){
         if(!error && response.statusCode==200) {
-            var parsedBody = JSON.parse(data)
-            console.log('parsedBody is: ', parsedBody)
-            res.render('home.ejs', {result: parsedBody, url: req.url})
+            var parsedBody = JSON.parse(data) //is an array
+            console.log(parsedBody, req.query);
+            res.render('search-results.ejs', {result: parsedBody, url: req.url, bay_id: req.query.bay_id}) ; 
+
         } else {
             console.log('ERROR getting data! ', error);
+            let errorMessage = 'Hmmm. There is no data for the Bay ID ' + `"${req.query.bay_id}"`;
+            render404(req, res, errorMessage);
         }
     })
     // res.send('<h1> WELCOME TO THE HOME PAGE</h1><p> <strong> We are glad you\'re here!</strong></p>'); 
@@ -85,8 +87,7 @@ app.listen(port, ()=>{
     console.log(`server running on port ${port}...`);
 })
 
-function render404(request, response) {
+function render404(request, response, errorMessage = 'Oooopsie. This page doesn\'t exist.') {
     let path = request.url;
-    let errorMessage = 'Oooopsie. This page doesn\'t exist.';
     response.status(404).render('404.ejs',  {path:path, errorMessage: errorMessage});
 }
