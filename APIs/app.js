@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const request = require('request');
-const url = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=100';
+const url = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=';
+const max_parking_results=25;
 
 const app = express();
 
@@ -23,10 +24,10 @@ app.get('/', function(req, res){
 })
 
 app.get('/parking', function(req, res){
-    request(url, function(error, response, body){
+    request(url+max_parking_results, function(error, response, body){
         if(!error && response.statusCode ==200) {
-            let data = JSON.parse(body);
-            res.render('parking.ejs', {data : data});
+            let _data = JSON.parse(body);
+            res.render('parking.ejs', {data : _data, max_results : max_parking_results});
         } else {
             render404(req, res);
         }

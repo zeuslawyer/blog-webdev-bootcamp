@@ -1,12 +1,11 @@
 
 body {
-    background-color: plum;
-    color: brown;
-    font-weight: 600;    
-} 
+    color: #607D8B;
+}   
 
-h1 {
-    color: yellow;
+.search-result-text {
+    font-weight: bold;
+    color: blue;
 }
 
 #error-div {

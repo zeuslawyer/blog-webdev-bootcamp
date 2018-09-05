@@ -2,18 +2,18 @@
 <% include partials/header.ejs %>
 
 <% if (url.includes('/search?') && result.length > 0 ) { %>  
-    <h1>THIS IS THE SEARCH RESULTS PAGE!</h1>
-    <p style="color :white; font-weight: 300"> 
-        Bay ID <%= result[0].bay_id %> is currently <%= result[0].status %>. 
+    <h1>THIS IS THE SEARCH RESULTS PAGE!</h1>    <br/>
+    
+    <p> 
+        Bay ID <%= result[0].bay_id %> is currently <span class="search-result-text"><%= result[0].status %></span> . 
     </p>
-    <br/>
     <p>
         Want to <a href="/parking">try again</a> with another Bay ID?
     </p>
 
 <% } else { %>
     <h1>THIS IS THE SEARCH RESULTS PAGE!</h1>
-    <p style="color :white; font-weight: 300"> Something wrong with what you entered there...Bay ID <%= bay_id %> does not exist, or may not have data right now.</p>
+    <p> Something wrong with what you entered there...Bay ID <%= bay_id %> does not exist, or may not have data right now.</p>
     <br/>
     <p>Want to <a href="/parking">try </a> another Bay ID?</p>
 <% } %>  

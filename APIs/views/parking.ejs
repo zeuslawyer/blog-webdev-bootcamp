@@ -1,19 +1,31 @@
 <% include partials/header %>
 
-<h1>/parking is working</h1>
-<p>Look for a specific Bay ID?</p>
-<form action="/search" method="GET"> 
-    <input type="text" name="bay_id" placeholder="enter a Bay ID">
-    <input type="submit">  
-</form>
+<div class="container">
+    <header class="jumbotron">
+        <h1>/parking is working</h1>
+    </header>
+    <p>Look for a specific Bay ID?</p>
+    <form action="/search" method="GET"> 
+        <!-- <input type="number" name="bay_id" placeholder="enter a Bay ID"> -->  
+        <!-- now using bootstrap -->
+        <div class="form-group row">
+            <div class="col-4">
+            <input class="" type="number" name="bay_id" placeholder="enter a BayID number" id="bay_id">
+            </div>
+        </div>
+        <input type="submit" class="btn btn-outline-info">  
+    </form>
 
-<br/>
-<p>A quick snapshot of available parking spaces by Bay ID are: </p>
-<% data.forEach(function(obj){ %>
-    <li style="color:antiquewhite; font-weight: 400"> <%= obj.bay_id %> at [<%= obj.location.coordinates.toString() %>] is  <%= obj.status  %></li>
-<% }); %>
+    <br/>
+    <p>
+        Here are <%= max_results  %> parking spaces, identified by Bay ID in Melbourne's CBD: 
+    </p>
 
+    <% data.forEach(function(obj){ %>
+        <li style="font-weight: 400"> <%= obj.bay_id %> at [<%= obj.location.coordinates.toString() %>] is  <%= obj.status  %></li>
+    <% }); %>
 
+</div>
 
 
 <% include partials/footer %>
