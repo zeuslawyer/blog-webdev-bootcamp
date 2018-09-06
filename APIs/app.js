@@ -1,8 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const request = require('request');
-const url = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=';
-const max_parking_results=25;
+const express = require('express'),
+bodyParser = require('body-parser'),
+request = require('request'),
+url = 'https://data.melbourne.vic.gov.au/resource/dtpv-d4pf.json?$limit=';
+let max_parking_results=25;
 
 const app = express();
 
@@ -11,7 +11,7 @@ let posts = [
     {title: 'I love to code', author: 'Zubin Pratap'},
     {title: 'I sometimes worry about the future', author: 'Zubin Pratap'},
     {title: 'Frankie goes to Hollywood', author: 'Zp Keshavar'}
-]
+] 
 let friends = ["TJ", "Stuart", "Maggie", "Pippa", "Zorro"];
 
 app.use(express.static('public'));  //serve static assets in public dir

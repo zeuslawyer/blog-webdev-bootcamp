@@ -16,7 +16,9 @@ var catSchema = new mongoose.Schema({    //object schema created from which mode
 var Cat = mongoose.model("Cat", catSchema);  //model class created
 
 
-/*   ******SAVE NEW RECORD********  */
+/*   ******CREATE & SAVE NEW RECORD********  */
+
+/* METHOD 1 */
 // var tubby = new Cat({
 //     name: 'Jasper',
 //     age: '5',
@@ -31,12 +33,23 @@ var Cat = mongoose.model("Cat", catSchema);  //model class created
 //     }
 // });
 
+/* METHOD 2 */
+// Cat.create({name:'Dozer', age:6, address:'Perth, Western Australia' }, function(err, savedObject){
+//     if (err) {
+//         console.log ('OH NO, ERROR SAVING TO DB',  err);
+//     } else {
+//         console.log('Successfully saved the following to DB: \n', savedObject)
+//     }
+// })
+
+
+
 /*   *********** RETRIEVE RECORDS ************ */
 Cat.find({}, (err, results)=>{
     if(err) {
         console.log("OOPS, NO RESULTS FOUND", err);
     } else {
-        // console.log("here are the results:  \n", results);
+        console.log("\nhere are the results:  \n\n", results, '\n\n');
         if(results.length>0){
             results.forEach((record)=>{
                 console.log(`There is a cat named ${record.name} that is aged ${record.age} and lives in ${record.address}.`)
