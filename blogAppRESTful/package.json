@@ -1,0 +1,23 @@
+{
+  "name": "blog-app-restful",
+  "version": "1.0.0",
+  "description": "Udemy Course Code Along for RESTful Routing",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeuslawyer/udemy-webdev-bootcamp.git"
+  },
+  "keywords": [
+    "REST",
+    "RESTful"
+  ],
+  "author": "Zubin Pratap",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/zeuslawyer/udemy-webdev-bootcamp/issues"
+  },
+  "homepage": "https://github.com/zeuslawyer/udemy-webdev-bootcamp#readme"
+}
