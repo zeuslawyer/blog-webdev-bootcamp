@@ -1,0 +1,20 @@
+<% include ./partials/header.ejs %>
+
+<div class="new main text container segment"> 
+     <div class="ui huge header">
+        <h1>WRITE A NEW POST</h1> 
+    </div>
+    <div>
+        <form action="/blogs" method="POST">
+            <input type="text" placeholder="Title" name="blog[title]">
+            <input type="text" placeholder="Author" name="blog[author]">
+            <input type="text" placeholder="Image URL" name="blog[imageURL]">
+            <input type="text" placeholder="Write here!" name="blog[body]">
+            <input type="submit">
+            <!-- no need for a date field because the schema for the data already has a default value -->
+        </form>
+    </div>
+
+    <% include ./partials/footer.ejs %>
+
+</div>    

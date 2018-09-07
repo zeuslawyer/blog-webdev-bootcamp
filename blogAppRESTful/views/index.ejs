@@ -1,16 +1,18 @@
 <% include ./partials/header.ejs %>
 
-<div class="container">
+<div class="new main text container segment">
 
     <h1>THIS IS THE INDEX PAGE</h1>
 
-    <% blogs.forEach(function (blog) { %>
+    <% blogs.reverse().forEach(function (blog) { %>
         <div>
+            <hr>
             <h2> <%=blog.title %></h2>
             <img src="<%= blog.imageURL %>" alt="blog-post-image">
             <p>by <%= blog.author %></p>
             <p> submitted on: <%= blog.created %></p>
             <p><%= blog.body%></p>
+            <br/>
         </div>
 
     <% }); %>

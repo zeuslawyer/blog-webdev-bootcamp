@@ -41,7 +41,7 @@ var Blog = mongoose.model("blogPost", blogSchema);  //model class created. blogP
 
 /** routing RESTful */
 
-// HOME
+// HOME aka INDEX redirects to /blogs
 app.get('/', (req, res, next) => {
     // res.send('This is the Home Page.');
     res.redirect('/blogs');
@@ -57,6 +57,25 @@ app.get('/blogs', function(req, res, next){
     });
 })
 
+// NEW BLOG FORM => blogs/new 
+app.get('/blogs/new', (req, res, next) => {
+    // res.send('This is form for new blogs'); 
+    res.render('new.ejs');
+
+});
+
+//SUBMIT BLOG & CREATE TO DB
+app.post('/blogs', (req, res, next) => {
+    let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
+    Blog.create(blog, function(err, savedBlog) {
+                 if(err) {
+                     console.log (err);
+                 } else {
+                     console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
+                     res.redirect('/blogs');
+                 }
+             });
+})
 
 
 
