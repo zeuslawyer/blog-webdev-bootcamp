@@ -71,7 +71,7 @@ app.post('/blogs', (req, res, next) => {
                  if(err) {
                      console.log (err);
                  } else {
-                     console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
+                    //  console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
                      res.redirect('/blogs');
                  }
              });

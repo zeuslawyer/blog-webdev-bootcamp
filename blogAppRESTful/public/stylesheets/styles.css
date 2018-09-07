@@ -7,14 +7,17 @@ i.icon {
     background:#b14069;
 }
 
-div.container {
+div.container.main {
     color: #393b3ade;
-    margin-left: 25px;
+    margin-left: 35px;
 }
 
 div.main.text.container.segment {
     margin-top: 5em;
 } 
+div.footer {
+    margin-top: 2em;
+}
 
 
 
