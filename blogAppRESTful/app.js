@@ -17,7 +17,7 @@ mongoose.connect("mongodb://localhost/UdemyWebDev", function(err){
 
 var blogSchema = new mongoose.Schema({    //object schema created from which model class generated
     title: String,
-    imageURL: String,
+    imageURL: {type: String, default:"www.imageurlfake.com"},
     body: String,
     author: String,
     created: {type: Date, default:Date.now}
@@ -71,7 +71,7 @@ app.post('/blogs', (req, res, next) => {
                  if(err) {
                      console.log (err);
                  } else {
-                    //  console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
+                     console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
                      res.redirect('/blogs');
                  }
              });
