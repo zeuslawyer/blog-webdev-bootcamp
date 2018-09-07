@@ -53,6 +53,11 @@ app.get('/blogs/new', (req, res, next) => {
 //SUBMIT BLOG & CREATE TO DB
 app.post('/blogs', (req, res, next) => {
     let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
+    
+    //handle empty imageURL field in the form
+    if (blog.imageURL=='') {
+        blog.imageURL = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
+    }
     Blog.create(blog, function(err, savedBlog) {
                  if(err) {
                      console.log (err);
@@ -65,12 +70,12 @@ app.post('/blogs', (req, res, next) => {
 
 // SHOW ROUTE - show data about each Post
 app.get('/blogs/:id', (req, res, next) => {
-    console.log(req.params.id)
-    Blog.findById(req.params.id, (err, blogpost)=> {
+    Blog.findById(req.params.id, (err, returnedBlog)=> {
         if (err)  {
             res.send(" DB retrieve didnt work");
         } else {
-            res.send(blogpost)
+            // res.send(returnedBlog)
+            res.render('show-single-blog.ejs', {blog: returnedBlog})
             // return
         }
     });
