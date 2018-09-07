@@ -82,8 +82,6 @@ app.get('/blogs/:id', (req, res, next) => {
 });
 
 
-
-
 //START SERVER
 const port = process.env.PORT || 3000
 app.listen(port, function(){

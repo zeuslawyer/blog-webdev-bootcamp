@@ -1,16 +1,21 @@
 <% include ./partials/header.ejs %>
 
-<div class="new main text container segment"> 
+<div class="ui main text container segment show"> 
      <div class="ui huge header"> <h1><%= blog.title%></h1> </div>
-     <div class="ui top attached segment">
-         <div class="item">
-             <img src="<%= blog.imageURL %>" alt="" class="ui centered rounded image">
-         </div>
-     </div>
-        <%= blog.author %>
-        
-        <%= blog.created %>
-        <%= blog.body %>
+        <div class="ui top attached ">
+            <div class="item ">
+                <img src="<%= blog.imageURL %>" alt="" class="ui centered rounded image segment >
+                <div class="content">
+                    <span>by  <%= blog.author %></span>
+                    <p><span class="blog-date show-blog"><%= blog.created.toDateString() %></span></p> 
+                </div>
+                <div class="description">
+                    <p> <%= blog.body %></p>
+                </div>
+
+            </div>
+        </div>
+       
     <div>
        
     </div>

@@ -15,9 +15,19 @@ div.container.main {
 div.main.text.container.segment {
     margin-top: 5em;
 } 
+div.main.text.show {
+    box-shadow: 0 0 7px 0px black;
+} 
 div.footer {
     margin-top: 2em;
 }
+div.description p {
+    padding-top: 15px;
+}
+span.blog-date.show-blog{
+    font-size: 0.7em;
+}
+
 
 
 

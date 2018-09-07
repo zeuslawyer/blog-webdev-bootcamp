@@ -2,7 +2,8 @@
 
 <div class="new main text container segment">
 
-    <h1>THIS IS THE INDEX PAGE</h1>
+    <h1>Welcome to my Blog.</h1>
+    <small>This is about my journey to learn to code.</small>
 
     <% blogs.reverse().forEach(function (blog) { %>
         <div>
@@ -13,17 +14,13 @@
             
             <p>by <%= blog.author %></p>
             <p> submitted on: <%= blog.created %></p>
-            <p><%= blog.body%></p>
-            <p><em>
-                   Blog ID: <%= blog.id%>
-            </em></p>
+            <p class=""><%= blog.body.substring(0,110)%>  ... <a href="/blogs/<%=blog._id%>" >SHOW MORE</a></p>
             <p>
-                <a href="/blogs/<%=blog._id%>" >SHOW MORE</a>
+                
             </p>
-                  
-            
-
-
+            <p><em>
+                    Blog ID: <%= blog.id.substring(0,5)%>
+             </em></p>
             <br/>
         </div>
 
