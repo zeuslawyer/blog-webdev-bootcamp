@@ -25,20 +25,6 @@ var blogSchema = new mongoose.Schema({    //object schema created from which mod
 
 var Blog = mongoose.model("blogPost", blogSchema);  //model class created. blogPost becomes the 'blogPosts' collection in db
 
-// Blog.create({
-//     title:"Random-est Blog", 
-//     imageURL:"www.imageurlfake.com", 
-//     body:" MongoDB says that the current URL string parser is being deprecated so I need to pass { useNewUrlParser: true } to client.connect()", 
-//     author:"Ada Lovelace",
-//     created: new Date(),
-//      }, function(err, savedBlog) {
-//          if(err) {
-//              console.log (err);
-//          } else {
-//              console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
-//          }
-//      });
-
 /** routing RESTful */
 
 // HOME aka INDEX redirects to /blogs
@@ -75,7 +61,12 @@ app.post('/blogs', (req, res, next) => {
                      res.redirect('/blogs');
                  }
              });
-})
+});
+
+// SHOW ROUTE - show data about each Post
+app.get('/blogs/:id', (req, res, next) => {
+    res.send(" SHOW ROUTE WORKING");
+});
 
 
 
