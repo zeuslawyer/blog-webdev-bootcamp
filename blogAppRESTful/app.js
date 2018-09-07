@@ -65,7 +65,15 @@ app.post('/blogs', (req, res, next) => {
 
 // SHOW ROUTE - show data about each Post
 app.get('/blogs/:id', (req, res, next) => {
-    res.send(" SHOW ROUTE WORKING");
+    console.log(req.params.id)
+    Blog.findById(req.params.id, (err, blogpost)=> {
+        if (err)  {
+            res.send(" DB retrieve didnt work");
+        } else {
+            res.send(blogpost)
+            // return
+        }
+    });
 });
 
 
