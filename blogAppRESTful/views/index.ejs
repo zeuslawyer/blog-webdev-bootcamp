@@ -14,7 +14,7 @@
             
             <p>by <%= blog.author %></p>
             <p> Submitted on: <%= blog.created %></p>
-            <p class=""><%= blog.body.substring(0,110)%>  ... <a href="/blogs/<%=blog._id%>" >SHOW MORE</a></p>
+            <p ><%= blog.body.substring(0,110) %>  ... <a href="/blogs/<%=blog._id%>" >SHOW MORE</a></p>
       
             <div>
                 <a class="ui blue basic button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  

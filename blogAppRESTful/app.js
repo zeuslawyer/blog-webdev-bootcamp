@@ -63,7 +63,7 @@ app.post('/blogs', (req, res, next) => {
                  if(err) {
                      console.log (err);
                  } else {
-                     console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
+                     //console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
                      res.redirect('/blogs');
                  }
              });
@@ -104,6 +104,19 @@ app.put('/blogs/:id', (req, res, next)=>{
         }
     })
 });
+
+//DELETE / REMOVE blog
+app.delete('/blogs/:id', (req, res, next)=>{
+    // res.send('DELETE ROUTE WORKS')
+    Blog.findByIdAndRemove(req.params.id, (err)=>{
+        if(err) {
+            res.send('ERROR in finding/deleting from DB');
+        } else {
+            res.redirect('/blogs');
+        }
+    });
+});
+
 
 //START SERVER
 const port = process.env.PORT || 3000
