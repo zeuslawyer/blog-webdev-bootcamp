@@ -10,7 +10,7 @@
                     <p><span class="blog-date show-blog"><%= blog.created.toDateString() %></span></p> 
                 </div>
                 <div class="description">
-                    <p> <%= blog.body %></p>
+                    <p> <%-blog.body %></p>
                 </div>
                 <div>
                     <a class="positive ui button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  

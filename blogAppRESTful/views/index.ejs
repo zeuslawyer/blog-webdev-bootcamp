@@ -13,12 +13,14 @@
             <img src="<%= blog.imageURL %>" alt="blog-post-image">
             
             <p>by <%= blog.author %></p>
-            <p> submitted on: <%= blog.created %></p>
+            <p> Submitted on: <%= blog.created %></p>
             <p class=""><%= blog.body.substring(0,110)%>  ... <a href="/blogs/<%=blog._id%>" >SHOW MORE</a></p>
-            <p>
-                
-            </p>
-            <p><em>
+      
+            <div>
+                <a class="ui blue basic button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  
+            </div>
+
+            <p class="blog-id"><em>
                     Blog ID: <%= blog.id.substring(0,5)%>
              </em></p>
             <br/>

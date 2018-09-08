@@ -1,11 +1,13 @@
 const express = require('express'),
-      mongoose = require('mongoose')
-      bodyParser = require('body-parser')
+      mongoose = require('mongoose'),
+      bodyParser = require('body-parser'),
+      methodOveride = require('method-override')
 
 const app = express()
 
 app.use(express.static('public'));  //serve static assets in public dir
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(methodOveride('_method'))
 
 
 /**  Mongoose - setup */
@@ -79,13 +81,10 @@ app.get('/blogs/:id', (req, res, next) => {
     });
 });
 
-
-
 // EDIT BLOG - create edit form and route to it
 app.get('/blogs/:id/edit', (req, res, next)=>{
     // res.send('EDIT PAGE');
-    Blog.findById(req.params.id, (err, blogToEdit
-        )=> {
+    Blog.findById(req.params.id, (err, blogToEdit)=> {
         if (err)  {
             res.send(" DB retrieve for EDIT didnt work");
         } else {
@@ -93,6 +92,18 @@ app.get('/blogs/:id/edit', (req, res, next)=>{
         }
     });
 })
+
+//UPDATE BLOG - update db and redirect to show page for that updated blog
+app.put('/blogs/:id', (req, res, next)=>{
+    // res.send('PUT METHOD AND UPDATE ROUTE WORKING');
+    Blog.findByIdAndUpdate (req.params.id, req.body.blog, (err, updatedBlog)=>{
+        if (err) {
+            res.send(" DB update on PUT route didnt work");
+        } else {
+            res.redirect('/blogs/'+req.params.id);
+        }
+    })
+});
 
 //START SERVER
 const port = process.env.PORT || 3000

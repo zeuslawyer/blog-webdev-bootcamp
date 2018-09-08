@@ -29,6 +29,16 @@ span.blog-date.show-blog{
     font-size: 0.7em;
 }
 
+p:last-child {
+   margin-bottom: 0.5em; 
+}
+
+/* style the EDIT button and blogID on the show page */
+div:last-child p.blog-id {
+    margin: 10, 10, 10, 0; 
+    font-size: 0.8em;
+}
+
 
 
 
