@@ -32,6 +32,9 @@ span.blog-date.show-blog{
 p:last-child {
    margin-bottom: 0.5em; 
 }
+p a:hover{
+    color: #b14069;
+}
 
 /* style the EDIT button and blogID on the show page */
 div:last-child p.blog-id {
