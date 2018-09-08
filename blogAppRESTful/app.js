@@ -26,7 +26,6 @@ var blogSchema = new mongoose.Schema({    //object schema created from which mod
 var Blog = mongoose.model("blogPost", blogSchema);  //model class created. blogPost becomes the 'blogPosts' collection in db
 
 /** routing RESTful */
-
 // HOME aka INDEX redirects to /blogs
 app.get('/', (req, res, next) => {
     // res.send('This is the Home Page.');
@@ -50,7 +49,7 @@ app.get('/blogs/new', (req, res, next) => {
 
 });
 
-//SUBMIT BLOG & CREATE TO DB
+//SUBMIT BLOG & CREATE/save TO DB
 app.post('/blogs', (req, res, next) => {
     let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
     
@@ -70,17 +69,30 @@ app.post('/blogs', (req, res, next) => {
 
 // SHOW ROUTE - show data about each Post
 app.get('/blogs/:id', (req, res, next) => {
-    Blog.findById(req.params.id, (err, returnedBlog)=> {
+    Blog.findById(req.params.id, (err, blogToEdit)=> {
         if (err)  {
             res.send(" DB retrieve didnt work");
         } else {
-            // res.send(returnedBlog)
-            res.render('show-single-blog.ejs', {blog: returnedBlog})
-            // return
+            // res.send(blogToEdit
+            res.render('show-single-blog.ejs', {blog: blogToEdit})
         }
     });
 });
 
+
+
+// EDIT BLOG - create edit form and route to it
+app.get('/blogs/:id/edit', (req, res, next)=>{
+    // res.send('EDIT PAGE');
+    Blog.findById(req.params.id, (err, blogToEdit
+        )=> {
+        if (err)  {
+            res.send(" DB retrieve for EDIT didnt work");
+        } else {
+            res.render('edit.ejs', {blog: blogToEdit})
+        }
+    });
+})
 
 //START SERVER
 const port = process.env.PORT || 3000

@@ -1,0 +1,35 @@
+<% include ./partials/header.ejs %>
+
+<div class="new main text container segment"> 
+     <div class="ui huge header">
+        <h1>Now Editing: <%=blog.title %></h1> 
+    </div>
+
+    <div>
+        <form class="ui form" action="/blogs" method="PUT">
+            <div class="field">
+                <label for="blog[title]">Title</label>
+                <input type="text" required placeholder="Title" name="blog[title]" value ="<%= blog.title%>">
+            </div>
+            <div class="field">
+                <label for="blog[author]">Author Name</label>
+                <input type="text" required placeholder="Author" name="blog[author]" value ="<%= blog.author %>">
+            </div>
+            <div class="field">
+                <label for="blog[imageURL]">Image Link</label>
+                <input type="text" placeholder="Image URL" name="blog[imageURL]" value ="<%= blog.imageURL%>">
+            </div>
+            <div class="field">
+                <label for="blog[body]">Your wisdom goes here!</label>
+                <textarea name="blog[body]" required id="" cols="30" rows="10"> <%= blog.body%></textarea>
+            </div>
+
+            <input class="positive ui button " type="submit" value="DONE">
+            
+            <!-- no need for a date field because the schema for the data already has a default value -->
+        </form>
+    </div>
+
+    <% include ./partials/footer.ejs %>
+
+</div>    

@@ -8,8 +8,9 @@ i.icon {
 }
 
 div.container.main {
-    color: #393b3ade;
     margin-left: 35px;
+    margin-right: 35px;
+    color: #393b3ade;    
 }
 
 div.main.text.container.segment {
