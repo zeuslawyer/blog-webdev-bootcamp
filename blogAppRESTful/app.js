@@ -1,13 +1,15 @@
 const express = require('express'),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
-      methodOveride = require('method-override')
-
+      methodOveride = require('method-override'),
+      sanitizer = require('express-sanitizer')
+    
 const app = express()
 
 app.use(express.static('public'));  //serve static assets in public dir
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
+app.use(sanitizer());
 
 
 /**  Mongoose - setup */
@@ -54,7 +56,8 @@ app.get('/blogs/new', (req, res, next) => {
 //SUBMIT BLOG & CREATE/save TO DB
 app.post('/blogs', (req, res, next) => {
     let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
-    
+    //sanitize
+    blog.body = req.sanitize(req.body.blog.body);
     //handle empty imageURL field in the form
     if (blog.imageURL=='') {
         blog.imageURL = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
@@ -96,6 +99,8 @@ app.get('/blogs/:id/edit', (req, res, next)=>{
 //UPDATE BLOG - update db and redirect to show page for that updated blog
 app.put('/blogs/:id', (req, res, next)=>{
     // res.send('PUT METHOD AND UPDATE ROUTE WORKING');
+    //sanitize:
+    req.body.blog.body = req.sanitize(req.body.blog.body);
     Blog.findByIdAndUpdate (req.params.id, req.body.blog, (err, updatedBlog)=>{
         if (err) {
             res.send(" DB update on PUT route didnt work");
