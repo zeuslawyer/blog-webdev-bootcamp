@@ -3,6 +3,7 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       methodOveride = require('method-override'),
       sanitizer = require('express-sanitizer')
+      Blog = require('./models/blogs');
     
 const app = express()
 
@@ -11,23 +12,6 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
 app.use(sanitizer());
 
-
-/**  Mongoose - setup */
-mongoose.connect("mongodb://localhost/UdemyWebDev", function(err){
-    if(err){
-        console.log('DB CONNECTION ERROR!')
-    }
-}, { useNewUrlParser: true });
-
-var blogSchema = new mongoose.Schema({    //object schema created from which model class generated
-    title: String,
-    imageURL: {type: String, default:"www.imageurlfake.com"},
-    body: String,
-    author: String,
-    created: {type: Date, default:Date.now}
-});
-
-var Blog = mongoose.model("blogPost", blogSchema);  //model class created. blogPost becomes the 'blogPosts' collection in db
 
 /** routing RESTful */
 // HOME aka INDEX redirects to /blogs
