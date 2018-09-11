@@ -113,7 +113,14 @@ app.delete('/blogs/:id', (req, res, next)=>{
 // COMMENTS - new comment
 app.get('/blogs/:id/comments/new', (req, res, next)=>{
         // res.send('THIS IS THE NEW COMMENT PAGE');
-        res.render('./newComment.ejs')
+        Blog.findById(req.params.id, function(err, returnedBlog){
+            if (err) {
+                console.log('DB error in new comment route\n===============\n', err)
+            } else {
+                res.render('./newComment.ejs', {blog:returnedBlog})
+            }
+        })
+        
 });
 
 
