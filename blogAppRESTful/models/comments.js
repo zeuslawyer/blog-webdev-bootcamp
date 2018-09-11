@@ -17,20 +17,21 @@ var commentSchema = new mongoose.Schema({
 
 
 var comment = {
-    content: 'This is a test auto-generated comment #3',
+    content: 'This is a test auto-generated comment #4',
     author: 'zp'
 } 
 
 // MODEL
 exports.Comment = mongoose.model("Comment", commentSchema);
-exports.generateComments= function() {
-                            exports.Comment.create(comment, function(err, savedComment) {
-                                if(err) {
-                                    console.log (err);
-                                } else {
-                                    console.log('========================\n', savedComment);
-                                }  
-                            });
-                        }
+
+// exports.generateComments= function() {
+//                             exports.Comment.create(comment, function(err, savedComment) {
+//                                 if(err) {
+//                                     console.log (err);
+//                                 } else {
+//                                     console.log('========================\n', savedComment);
+//                                 }  
+//                             });
+//                         }
                         
     

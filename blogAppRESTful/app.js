@@ -4,7 +4,7 @@ const express = require('express'),
       methodOveride = require('method-override'),
       sanitizer = require('express-sanitizer')
       Blog = require('./models/blogs');
-      comments = require('./models/comments');
+      Comments = require('./models/comments');
     
 const app = express()
 
@@ -13,14 +13,14 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
 app.use(sanitizer());
 
-comments.generateComments();
+// Comments.generateComments();
 
 
 /** routing RESTful */
 // HOME aka INDEX redirects to /blogs
 app.get('/', (req, res, next) => {
-    res.send('This is the Home Page.');
-    // res.redirect('/blogs');
+    // res.send('This is the Home Page.');
+    res.redirect('/blogs');
 });
 
 app.get('/blogs', function(req, res, next){
