@@ -16,8 +16,8 @@ app.use(sanitizer());
 /** routing RESTful */
 // HOME aka INDEX redirects to /blogs
 app.get('/', (req, res, next) => {
-    // res.send('This is the Home Page.');
-    res.redirect('/blogs');
+    res.send('This is the Home Page.');
+    // res.redirect('/blogs');
 });
 
 app.get('/blogs', function(req, res, next){
@@ -58,12 +58,12 @@ app.post('/blogs', (req, res, next) => {
 
 // SHOW ROUTE - show data about each Post
 app.get('/blogs/:id', (req, res, next) => {
-    Blog.findById(req.params.id, (err, blogToEdit)=> {
+    Blog.findById(req.params.id, (err, retrievedBlog)=> {
         if (err)  {
             res.send(" DB retrieve didnt work");
         } else {
             // res.send(blogToEdit
-            res.render('show-single-blog.ejs', {blog: blogToEdit})
+            res.render('show-single-blog.ejs', {blog: retrievedBlog})
         }
     });
 });
@@ -104,6 +104,12 @@ app.delete('/blogs/:id', (req, res, next)=>{
             res.redirect('/blogs');
         }
     });
+});
+
+
+// COMMENTS - new comment
+app.get('/blogs/:id/comments/new', (req, res, next)=>{
+        res.send('THIS IS THE NEW COMMENT PAGE');
 });
 
 
