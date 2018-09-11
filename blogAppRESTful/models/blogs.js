@@ -14,7 +14,14 @@ var blogSchema = new mongoose.Schema({    //object schema created from which mod
     imageURL: {type: String, default:"www.imageurlfake.com"},
     body: String,
     author: String,
-    created: {type: Date, default:Date.now}
+    created: {type: Date, default:Date.now},
+    comments:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment'    
+        }
+    ]
+        
 });
 
 // MODEL

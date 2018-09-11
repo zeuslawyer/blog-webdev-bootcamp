@@ -4,6 +4,7 @@ const express = require('express'),
       methodOveride = require('method-override'),
       sanitizer = require('express-sanitizer')
       Blog = require('./models/blogs');
+      comments = require('./models/comments');
     
 const app = express()
 
@@ -11,6 +12,8 @@ app.use(express.static('public'));  //serve static assets in public dir
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
 app.use(sanitizer());
+
+comments.generateComments();
 
 
 /** routing RESTful */
