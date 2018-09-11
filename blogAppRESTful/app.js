@@ -112,7 +112,8 @@ app.delete('/blogs/:id', (req, res, next)=>{
 
 // COMMENTS - new comment
 app.get('/blogs/:id/comments/new', (req, res, next)=>{
-        res.send('THIS IS THE NEW COMMENT PAGE');
+        // res.send('THIS IS THE NEW COMMENT PAGE');
+        res.render('./newComment.ejs')
 });
 
 
