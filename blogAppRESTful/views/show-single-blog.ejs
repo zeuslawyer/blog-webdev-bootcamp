@@ -33,7 +33,7 @@
         <h3>Comments:</h3>   
         <% blog.comments.reverse().forEach(function(comment){   %>
             <p> 
-                <%= comment.content %>  <br/>
+                <%- comment.content %>  <br/>
                 <span class="blog-date show-blog"> <em><%= comment.author %>, on <%= comment.created.toDateString() %> </em> </span>
             </p>  
         <% }) %>

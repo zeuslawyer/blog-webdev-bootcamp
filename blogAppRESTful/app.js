@@ -99,14 +99,24 @@ app.put('/blogs/:id', (req, res, next)=>{
     })
 });
 
-//DELETE / REMOVE blog
+//DELETE / REMOVE blog & its comments
 app.delete('/blogs/:id', (req, res, next)=>{
     // res.send('DELETE ROUTE WORKS')
     Blog.findByIdAndRemove(req.params.id, (err, removedBlog)=>{
-        if(err) {
+        if(err) { 
             res.send('ERROR in finding/deleting from DB');
         } else {
-            console.log(removedBlog.comments);
+            //delete comments associated with the blog being deleted
+            let commentRefs = removedBlog.comments;
+            if (commentRefs) {
+                commentRefs.forEach(function(reference){
+                    Comment.findByIdAndRemove(reference, (err)=>{
+                        if (err) {
+                            res.send('error deleting comment(s) of deleted blog')
+                        } 
+                    })
+                })
+            }
             res.redirect('/blogs');
         }
     });
@@ -142,7 +152,6 @@ app.post('/blogs/:id/comments', (req, res, next)=>{
                 } else {
                     returnedBlog.comments.push(comment);
                     returnedBlog.save();
-                    console.log('========================= ' , 'SAVED')
                     res.redirect('/blogs/' + returnedBlog._id );
                 }
             } )
