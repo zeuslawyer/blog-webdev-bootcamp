@@ -9,7 +9,7 @@
     </div>
 
     <div>
-        <form class="ui form" action="/blogs/<%=blog._id%>/comments/new?_method=PUT" method="POST">
+        <form class="ui form" action="/blogs/<%=blog._id%>/comments" method="POST">
             <div class="field">
                 <label >Your Comment</label>
                 <textarea name="comment[content]" required id="" cols="30" rows="2" placeholder="What do you think?"> </textarea>

@@ -25,7 +25,7 @@ var blogSchema = new mongoose.Schema({    //object schema created from which mod
 });
 
 // MODEL
-var Blog = mongoose.model("blogPost", blogSchema);  
+const Blog = mongoose.model("blogPost", blogSchema);  
 
 
 module.exports = Blog;

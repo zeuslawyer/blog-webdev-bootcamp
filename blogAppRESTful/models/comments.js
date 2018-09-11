@@ -16,13 +16,22 @@ var commentSchema = new mongoose.Schema({
 });
 
 
-var comment = {
-    content: 'This is a test auto-generated comment #4',
-    author: 'zp'
-} 
-
 // MODEL
-exports.Comment = mongoose.model("Comment", commentSchema);
+const Comment = mongoose.model("Comment", commentSchema);
+
+module.exports = Comment;
+
+//
+// function to seed comments on server start
+//
+
+
+
+
+// var comment = {
+//     content: 'This is a test auto-generated comment #4',
+//     author: 'zp'
+// } 
 
 // exports.generateComments= function() {
 //                             exports.Comment.create(comment, function(err, savedComment) {

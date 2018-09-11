@@ -4,7 +4,7 @@ const express = require('express'),
       methodOveride = require('method-override'),
       sanitizer = require('express-sanitizer')
       Blog = require('./models/blogs');
-      Comments = require('./models/comments');
+      Comment = require('./models/comments');
     
 const app = express()
 
@@ -61,14 +61,16 @@ app.post('/blogs', (req, res, next) => {
 
 // SHOW ROUTE - show data about each Post
 app.get('/blogs/:id', (req, res, next) => {
-    Blog.findById(req.params.id, (err, retrievedBlog)=> {
-        if (err)  {
-            res.send(" DB retrieve didnt work");
-        } else {
-            // res.send(blogToEdit
-            res.render('show-single-blog.ejs', {blog: retrievedBlog})
-        }
-    });
+    Blog.findById(req.params.id)
+        .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
+        .exec(function (err, retrievedBlog) {
+            if (err)  {
+                res.send(" DB retrieve didnt work");
+            } else {
+                // res.send(blogToEdit
+                res.render('show-single-blog.ejs', {blog: retrievedBlog})
+            }
+        });
 });
 
 // EDIT BLOG - create edit form and route to it
@@ -100,10 +102,11 @@ app.put('/blogs/:id', (req, res, next)=>{
 //DELETE / REMOVE blog
 app.delete('/blogs/:id', (req, res, next)=>{
     // res.send('DELETE ROUTE WORKS')
-    Blog.findByIdAndRemove(req.params.id, (err)=>{
+    Blog.findByIdAndRemove(req.params.id, (err, removedBlog)=>{
         if(err) {
             res.send('ERROR in finding/deleting from DB');
         } else {
+            console.log(removedBlog.comments);
             res.redirect('/blogs');
         }
     });
@@ -122,6 +125,31 @@ app.get('/blogs/:id/comments/new', (req, res, next)=>{
         })
         
 });
+
+//COMMENTS - POST & SAVE TO DB
+app.post('/blogs/:id/comments', (req, res, next)=>{
+    let newComment = req.body.comment
+    newComment.content = req.sanitize(newComment.content);
+
+    //store comment against blogpost
+    Blog.findById(req.params.id, (err, returnedBlog)=>{
+        if(err) {
+            res.send('error retrieving blog from DB - Comments Routes');
+        } else {
+            Comment.create(newComment, (err, comment)=> {
+                if(err) {
+                    res.send('error saving new comment')
+                } else {
+                    returnedBlog.comments.push(comment);
+                    returnedBlog.save();
+                    console.log('========================= ' , 'SAVED')
+                    res.redirect('/blogs/' + returnedBlog._id );
+                }
+            } )
+        }
+    })
+
+})
 
 
 //START SERVER
