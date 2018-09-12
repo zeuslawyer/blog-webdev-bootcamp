@@ -23,7 +23,6 @@ app.use(sanitizer());
 
 // Comments.generateComments();
 
-
 //========================
 //configure PASSPORT
 //========================
@@ -40,8 +39,10 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-/** routing RESTful */
-// HOME aka INDEX redirects to /blogs
+
+//========================
+// routing - routes - RESTful
+//========================
 app.get('/', (req, res, next) => {
     // res.send('This is the Home Page.');
     res.redirect('/blogs');
@@ -57,6 +58,22 @@ app.get('/blogs', function(req, res, next){
     });
 })
 
+//========================
+// AUTH routes
+//========================
+app.get('/register', (req, res)=>{
+    res.render('register.ejs');
+})
+
+app.post('/register', (req, res)=>{
+    // res.render('register.ejs');
+    res.send(req.body)
+})
+
+
+//========================
+// new and edit blog routes
+//========================
 // NEW BLOG FORM => blogs/new 
 app.get('/blogs/new', (req, res, next) => {
     // res.send('This is form for new blogs'); 

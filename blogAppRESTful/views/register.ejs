@@ -1,0 +1,22 @@
+<% include ./partials/header.ejs %>
+
+<div class="new main text container segment form">
+    <h1 >SIGN UP FOR AN ACCOUNT</h1>
+
+    <form action="/register" method="POST">
+        <div class="ui mini form">
+            <div class="two fields">
+                <div class="field">
+                    <label>Email</label>
+                    <input placeholder="Your email is your username" type="text" name="username" required>
+                </div>
+                <div class="field">
+                    <label>Password</label>
+                    <input placeholder="password" type="text" name="password" required>
+                </div>
+            </div>
+            <button class="ui submit button blue">Submit</button>
+        </div>
+    </form>
+
+    
