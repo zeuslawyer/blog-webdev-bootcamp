@@ -71,7 +71,8 @@ app.post('/register', (req, res)=>{
         req.body.password,
         function(err, newUser) {
             if (err) { 
-                return res.send('Error registering new User')
+                console.log(err)
+                return res.send('Error registering new User. ' + err.message +'.')
             } 
             passport.authenticate("local")(req, res, ()=>{
                 // res.redirect('/blogs')
