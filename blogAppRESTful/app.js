@@ -66,9 +66,20 @@ app.get('/register', (req, res)=>{
 })
 
 app.post('/register', (req, res)=>{
-    // res.render('register.ejs');
-    res.send(req.body)
-})
+    User.register(
+        new User({username:req.body.username}),
+        req.body.password,
+        function(err, newUser) {
+            if (err) { 
+                return res.send('Error registering new User')
+            } 
+            passport.authenticate("local")(req, res, ()=>{
+                // res.redirect('/blogs')
+                res.send(newUser)
+            })
+        }
+    );
+});
 
 
 //========================
@@ -106,7 +117,7 @@ app.get('/blogs/:id', (req, res, next) => {
         .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
         .exec(function (err, retrievedBlog) {
             if (err)  {
-                res.send(" DB retrieve didnt work");
+                res.send(`DB retrieve for path ${req.url} didnt work`);
             } else {
                 // res.send(blogToEdit
                 res.render('show-single-blog.ejs', {blog: retrievedBlog})
