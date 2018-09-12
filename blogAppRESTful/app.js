@@ -8,7 +8,7 @@ const express = require('express'),
     
 const app = express()
 
-app.use(express.static('public'));  //serve static assets in public dir
+app.use(express.static(__dirname + '/public'));  //serve static assets in public dir
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
 app.use(sanitizer());
