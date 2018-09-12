@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const dotenv = require('dotenv').config();
 
 /**  Mongoose - CONNECT */
-mongoose.connect("mongodb://localhost/UdemyWebDev", function(err){
+mongoose.connect(process.env.DB_HOST, function(err){
     if(err){
         console.log('DB CONNECTION ERROR!')
     }

@@ -2,13 +2,17 @@ const express = require('express'),
       mongoose = require('mongoose'),
       bodyParser = require('body-parser'),
       methodOveride = require('method-override'),
-      sanitizer = require('express-sanitizer')
-      Blog = require('./models/blogs');
-      Comment = require('./models/comments');
+      sanitizer = require('express-sanitizer'),
+      Blog = require('./models/blogs'),
+      Comment = require('./models/comments'),
+      passport = require('passport'),
+      localStrategy = require('passport-local');
+      User = require('./models/users.js');
 
-require('dotenv').config();
+
+const dotenv = require('dotenv').config();
     
-const app = express()
+const app = express();
 
 app.use(express.static(__dirname + '/public'));  //serve static assets in public dir
 app.use(bodyParser.urlencoded({extended:true}));
