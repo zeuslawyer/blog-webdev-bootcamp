@@ -5,6 +5,8 @@ const express = require('express'),
       sanitizer = require('express-sanitizer')
       Blog = require('./models/blogs');
       Comment = require('./models/comments');
+
+require('dotenv').config();
     
 const app = express()
 
