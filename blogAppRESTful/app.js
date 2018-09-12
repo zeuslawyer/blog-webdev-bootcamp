@@ -6,8 +6,10 @@ const express = require('express'),
       Blog = require('./models/blogs'),
       Comment = require('./models/comments'),
       passport = require('passport'),
-      localStrategy = require('passport-local');
-      User = require('./models/users.js');
+      localStrategy = require('passport-local'),
+      User = require('./models/users.js'),
+      expressSession= require('express-session')
+
 
 
 const dotenv = require('dotenv').config();
@@ -21,6 +23,22 @@ app.use(sanitizer());
 
 // Comments.generateComments();
 
+
+//========================
+//configure PASSPORT
+//========================
+
+app.use(expressSession({
+    secret : "this is a test udemy app",
+    resave : false,
+    saveUninitialized: false
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 /** routing RESTful */
 // HOME aka INDEX redirects to /blogs
@@ -138,8 +156,7 @@ app.get('/blogs/:id/comments/new', (req, res, next)=>{
             } else {
                 res.render('./newComment.ejs', {blog:returnedBlog})
             }
-        })
-        
+        });
 });
 
 //COMMENTS - POST & SAVE TO DB
