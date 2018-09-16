@@ -87,28 +87,35 @@ app.get('/login', (req, res)=>{
 app.post('/login'
     , passport.authenticate('local', 
     {
-        successRedirect: '/blogs',
+        // successRedirect:  '/blogs' ,
         failureRedirect: '/login',
         failureMessage: 'LOGIN FAILED'
     }
     )
-    , (req, res)=>{ }
+    , (req, res)=>{
+      res.redirect(req.session.returnPath || '/blogs');
+      delete req.session.returnPath;
+     }
 );
 
+app.get('/logout', (req, res)=> {
+    req.logout();
+    res.redirect('/');
+})
 
 
 //========================
 // new and edit blog routes
 //========================
 // NEW BLOG FORM => blogs/new 
-app.get('/blogs/new', (req, res, next) => {
+app.get('/blogs/new', isUserAuthenticated, (req, res, next) => {
     // res.send('This is form for new blogs'); 
     res.render('new.ejs');
 
 });
 
 //SUBMIT BLOG & CREATE/save TO DB
-app.post('/blogs', (req, res, next) => {
+app.post('/blogs', isUserAuthenticated, (req, res, next) => {
     let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
     //sanitize
     blog.body = req.sanitize(req.body.blog.body);
@@ -127,7 +134,7 @@ app.post('/blogs', (req, res, next) => {
 });
 
 // SHOW ROUTE - show data about each Post
-app.get('/blogs/:id', (req, res, next) => {
+app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
     Blog.findById(req.params.id)
         .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
         .exec(function (err, retrievedBlog) {
@@ -141,7 +148,7 @@ app.get('/blogs/:id', (req, res, next) => {
 });
 
 // EDIT BLOG - create edit form and route to it
-app.get('/blogs/:id/edit', (req, res, next)=>{
+app.get('/blogs/:id/edit', isUserAuthenticated, (req, res, next)=>{
     // res.send('EDIT PAGE');
     Blog.findById(req.params.id, (err, blogToEdit)=> {
         if (err)  {
@@ -153,7 +160,7 @@ app.get('/blogs/:id/edit', (req, res, next)=>{
 })
 
 //UPDATE BLOG - update db and redirect to show page for that updated blog
-app.put('/blogs/:id', (req, res, next)=>{
+app.put('/blogs/:id',isUserAuthenticated, (req, res, next)=>{
     // res.send('PUT METHOD AND UPDATE ROUTE WORKING');
     //sanitize:
     req.body.blog.body = req.sanitize(req.body.blog.body);
@@ -167,13 +174,14 @@ app.put('/blogs/:id', (req, res, next)=>{
 });
 
 //DELETE / REMOVE blog & its comments
-app.delete('/blogs/:id', (req, res, next)=>{
+app.delete('/blogs/:id', isUserAuthenticated, (req, res, next)=>{
     // res.send('DELETE ROUTE WORKS')
     Blog.findByIdAndRemove(req.params.id, (err, removedBlog)=>{
         if(err) { 
             res.send('ERROR in finding/deleting from DB');
         } else {
             //delete comments associated with the blog being deleted
+            console.log(`deleted Blog with id ${removedBlog._id} from database`)
             let commentRefs = removedBlog.comments;
             if (commentRefs) {
                 commentRefs.forEach(function(reference){
@@ -191,7 +199,7 @@ app.delete('/blogs/:id', (req, res, next)=>{
 
 
 // COMMENTS - new comment
-app.get('/blogs/:id/comments/new', (req, res, next)=>{
+app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
         // res.send('THIS IS THE NEW COMMENT PAGE');
         Blog.findById(req.params.id, function(err, returnedBlog){
             if (err) {
@@ -203,7 +211,7 @@ app.get('/blogs/:id/comments/new', (req, res, next)=>{
 });
 
 //COMMENTS - POST & SAVE TO DB
-app.post('/blogs/:id/comments', (req, res, next)=>{
+app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
     let newComment = req.body.comment
     newComment.content = req.sanitize(newComment.content);
 
@@ -227,7 +235,31 @@ app.post('/blogs/:id/comments', (req, res, next)=>{
 })
 
 
-//START SERVER
+//========================
+// MIDDLEWARE
+//========================
+
+function isUserAuthenticated(req, res, next) {
+    // console.log('=======\n' +req.path + '\n')
+    
+    /*
+        store the current req path in the session so it can be returned to  
+        see : https://stackoverflow.com/questions/13335881/redirecting-to-previous-page-after-authentication-in-node-js-using-passport-js
+    */
+
+    req.session.returnPath = req.path
+
+    if (req.isAuthenticated()){
+        return next();
+    }
+
+    console.log('user not signed in -redirected to login page, and then returnPath may be used')
+    res.redirect('/login')
+}
+
+//========================  
+// SERVER START
+//========================
 const port = process.env.PORT || 3000
 app.listen(port, function(){
     console.log (`Server stared on Port ${port}`);

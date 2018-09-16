@@ -3,6 +3,20 @@
 <div class="new main text container segment form">
     <h1 >LOGIN TO YOUR ACCOUNT</h1>
 
+    <p>In order to prevent damage to the site or the experience, we require user authetication. Your data is not used
+        for any marketing or commercial purposes. It is <bold>purely and only</bold> to ensure accountability for posts, comments
+        etc on this site, and to prevent damage to it. <br/>
+    </p>
+    <p>
+        If you do not yet have an account, it's simple - use your email and choose a password at this 
+        <a href="/register"> 
+            <bold>signup form</bold> 
+        </a>  
+        and then you've got an account.  Please note that I will not be able to recover lost passwords, so if you forget it, get in touch 
+        and I will delete your account so you can re-register (if you want!)
+    </p>
+    <p>Thank you.</p>
+
     <form action="/login" method="POST">
         <div class="ui mini form">
             <div class="two fields">
@@ -12,7 +26,7 @@
                 </div>
                 <div class="field">
                     <label>Password</label>
-                    <input placeholder="password" type="text" name="password" required>
+                    <input placeholder="password" type="password" name="password"  required>
                 </div>
             </div>
             <button class="ui submit button blue">Submit</button>
