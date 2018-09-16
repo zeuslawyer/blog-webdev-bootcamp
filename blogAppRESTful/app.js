@@ -49,6 +49,7 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/blogs', function(req, res, next){
+    console.log('req.user is : ' + req.user);
     Blog.find({  }, function(err, savedBlogs){
         if(err) {
             console.log('Error Reading from DB');
@@ -67,7 +68,7 @@ app.get('/register', (req, res)=>{
 
 app.post('/register', (req, res)=> { 
     User.register(
-        new User({username:req.body.username})
+        new User({username:req.body.username, displayName: req.body.displayName})
         ,req.body.password
         ,function(err, newUser) {
             if (err) { 
@@ -95,10 +96,10 @@ app.post('/login'
         }
     )
     , (req, res)=> {
-      console.log('returnPath is -->  ' + req.session.returnPath )
+    //   console.log('returnPath is -->  ' + req.session.returnPath )
       res.redirect(req.session.returnPath || '/blogs');
       req.session.returnPath = undefined;
-      console.log('deleted returnPath  :  ' + req.session.returnPath)
+    //   console.log('deleted returnPath  :  ' + req.session.returnPath)
      } 
 );
 
@@ -219,6 +220,8 @@ app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
 app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
     let newComment = req.body.comment
     newComment.content = req.sanitize(newComment.content);
+    newComment.author = req.user;
+    console.log(newComment)
 
     //store comment against blogpost
     Blog.findById(req.params.id, (err, returnedBlog)=>{
@@ -257,7 +260,7 @@ function isUserAuthenticated(req, res, next) {
     if (req.isAuthenticated()){
         return next();
     }
-    console.log('user not signed in -redirected to login page, and then returnPath may be used')
+    console.log('user not signed in --redirected to login page, and then returnPath may be used')
     res.redirect('/login')
 }
 

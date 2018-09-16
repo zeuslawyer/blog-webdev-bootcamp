@@ -11,7 +11,14 @@ mongoose.connect(process.env.DB_HOST, function(err){
 //SCHEMA
 var commentSchema = new mongoose.Schema({    
     content: String,
-    author: String,
+    author: {
+        id : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+        username: String,
+        displayName: String
+    },
     created: {type: Date, default:Date.now}
 });
 

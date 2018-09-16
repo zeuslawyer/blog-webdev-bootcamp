@@ -14,7 +14,8 @@ mongoose.connect(process.env.DB_HOST, function(err){
 //SCHEMA
 var userSchema = new mongoose.Schema({    
     username: String,
-    password: String,      
+    password: String,
+    displayName: String,      
 });
 
 // PLUGIN PASSPORT to mount passport methods on to the USER model for use by User objects
