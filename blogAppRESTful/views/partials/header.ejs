@@ -21,10 +21,20 @@
             </div>
 
             <div class="container">
-                <a href="/login" class="item float right">LOGIN</a>
-                <a href="/register" class="item float right">REGISTER</a>
-                <a href="/logout" class="item float right">LOGOUT</a>
+                <% if (!currentUser) { %>
+                    <a href="/login" class="item float right">LOGIN</a>
+                    <a href="/register" class="item float right">REGISTER</a>
+                <% } else  { %>
+                    <a href="/logout" class="item float right">LOGOUT</a>
+                <% } %>
 
+                <%# THIS IS FOR DEMO ONLY %>
+                <% if (currentUser) { %>
+                    <a href="#" class="item float right"> <%= pathData %> </a>
+                <% } %>
             </div>
       </div>
+   
+        
+      
         

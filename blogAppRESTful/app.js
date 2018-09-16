@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
 app.use(sanitizer());
 
-// seed comments with:       Comments.generateComments();
+// if db empty, then seed comments with:       Comments.generateComments();
 
 //========================
 //configure PASSPORT
@@ -33,10 +33,12 @@ app.use(expressSession({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.use(viewsData); //mounted on all routes to pass data into views/templates
 
 //========================
 // routing - routes - RESTful
@@ -50,8 +52,7 @@ app.get('/blogs', function(req, res, next){
     Blog.find({  }, function(err, savedBlogs){
         if(err) {
             console.log('Error Reading from DB');
-        } else {
-            console.log(savedBlogs.length)
+        } else {   
             res.render('index.ejs', {blogs:savedBlogs});
         }
     });
@@ -87,13 +88,13 @@ app.get('/login', (req, res)=>{
 
 app.post('/login'
     , passport.authenticate('local', 
-    {
-        // successRedirect:  '/blogs' ,
-        failureRedirect: '/login',
-        failureMessage: 'LOGIN FAILED'
-    }
+        {
+            // successRedirect:  '/blogs' ,
+            failureRedirect: '/login',
+            failureMessage: 'LOGIN FAILED'
+        }
     )
-    , (req, res)=>{
+    , (req, res)=> {
       res.redirect(req.session.returnPath || '/blogs');
       delete req.session.returnPath;
      }
@@ -254,9 +255,14 @@ function isUserAuthenticated(req, res, next) {
     if (req.isAuthenticated()){
         return next();
     }
-
     console.log('user not signed in -redirected to login page, and then returnPath may be used')
     res.redirect('/login')
+}
+
+function viewsData(req, res, next){
+    res.locals.currentUser = req.user;  //if not logged in, then is undefined
+    res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up
+    next();
 }
 
 //========================  
