@@ -56,7 +56,7 @@ app.get('/blogs', function(req, res, next){
             res.render('index.ejs', {blogs:savedBlogs});
         }
     });
-})
+});
 
 //========================
 // AUTH routes - REGISTER & LOGIN
@@ -125,7 +125,7 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
     //sanitize
     blog.body = req.sanitize(blog.body);
     blog.author = req.user;
-    console.log(blog)
+    console.log(blog.author.id)
     //handle empty imageURL field in the form
     if (blog.imageURL=='') {
         blog.imageURL = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
@@ -149,7 +149,7 @@ app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
                 res.send(`DB retrieve for path ${req.url} didnt work`);
             } else {
                 // res.send(blogToEdit
-                res.render('show-single-blog.ejs', {blog: retrievedBlog})
+                res.render('show-single-blog.ejs', {blog: retrievedBlog, authorID: retrievedBlog.author.id})
             }
         });
 });
