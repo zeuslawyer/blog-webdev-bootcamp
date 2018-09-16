@@ -47,10 +47,11 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/blogs', function(req, res, next){
-    Blog.find({}, function(err, savedBlogs){
+    Blog.find({  }, function(err, savedBlogs){
         if(err) {
             console.log('Error Reading from DB');
         } else {
+            console.log(savedBlogs.length)
             res.render('index.ejs', {blogs:savedBlogs});
         }
     });
@@ -109,6 +110,7 @@ app.get('/logout', (req, res)=> {
 //========================
 // NEW BLOG FORM => blogs/new 
 app.get('/blogs/new', isUserAuthenticated, (req, res, next) => {
+    console.log('req.user is --> ' + req.user)
     // res.send('This is form for new blogs'); 
     res.render('new.ejs');
 
