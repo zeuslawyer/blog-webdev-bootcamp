@@ -95,9 +95,11 @@ app.post('/login'
         }
     )
     , (req, res)=> {
+      console.log('returnPath is -->  ' + req.session.returnPath )
       res.redirect(req.session.returnPath || '/blogs');
-      delete req.session.returnPath;
-     }
+      req.session.returnPath = undefined;
+      console.log('deleted returnPath  :  ' + req.session.returnPath)
+     } 
 );
 
 app.get('/logout', (req, res)=> {

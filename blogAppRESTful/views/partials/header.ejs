@@ -16,8 +16,10 @@
                     MY BLOG 
                 </div>          
                 <a href="/" class="item">HOME</a>
-                <a href="/blogs/new" class="item">NEW POST</a>
-                
+                <% if (currentUser) { %>
+                    <a href="/blogs/new" class="item">NEW POST</a>
+                <% } %>
+
             </div>
 
             <div class="container">
@@ -26,11 +28,12 @@
                     <a href="/register" class="item float right">REGISTER</a>
                 <% } else  { %>
                     <a href="/logout" class="item float right">LOGOUT</a>
+                    <a class="item float right">Signed in as <%= currentUser.username %></a>
                 <% } %>
 
                 <%# THIS IS FOR DEMO ONLY %>
                 <% if (currentUser) { %>
-                    <a href="#" class="item float right"> <%= pathData %> </a>
+                    <a  class="item float right"> route: <%= pathData %> </a>
                 <% } %>
             </div>
       </div>
