@@ -49,7 +49,6 @@ app.get('/', (req, res, next) => {
 });
 
 app.get('/blogs', function(req, res, next){
-    console.log('req.user is : ' + req.user);
     Blog.find({  }, function(err, savedBlogs){
         if(err) {
             console.log('Error Reading from DB');
@@ -124,7 +123,9 @@ app.get('/blogs/new', isUserAuthenticated, (req, res, next) => {
 app.post('/blogs', isUserAuthenticated, (req, res, next) => {
     let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
     //sanitize
-    blog.body = req.sanitize(req.body.blog.body);
+    blog.body = req.sanitize(blog.body);
+    blog.author = req.user;
+    console.log(blog)
     //handle empty imageURL field in the form
     if (blog.imageURL=='') {
         blog.imageURL = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
@@ -221,7 +222,6 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
     let newComment = req.body.comment
     newComment.content = req.sanitize(newComment.content);
     newComment.author = req.user;
-    console.log(newComment)
 
     //store comment against blogpost
     Blog.findById(req.params.id, (err, returnedBlog)=>{

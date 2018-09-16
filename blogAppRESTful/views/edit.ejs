@@ -11,10 +11,16 @@
                 <label for="blog[title]">Title</label>
                 <input type="text" required placeholder="Title" name="blog[title]" value ="<%= blog.title%>">
             </div>
-            <div class="field">
-                <label for="blog[author]">Author Name</label>
-                <input type="text"  placeholder="Author" name="blog[author]" value ="<%= blog.author %>">
+
+            
+            
+            <div class="field">      <%# ------------------COMMENTED OUT AND        
+                <label for="blog[author]">Author Name</label>   
+            ----------  THE NEXT INPUT IS SET TO HIDDEN
+            %>
+             <input type="text"  placeholder="Author" hidden name="blog[author][displayName]" value ="<%= blog.author.displayName %>" > 
             </div>
+            
             <div class="field">
                 <label for="blog[imageURL]">Image Link</label>
                 <input type="text" placeholder="Image URL" name="blog[imageURL]" value ="<%= blog.imageURL%>">

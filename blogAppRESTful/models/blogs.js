@@ -10,11 +10,18 @@ mongoose.connect(process.env.DB_HOST, function(err){
 
 
 //SCHEMA
-var blogSchema = new mongoose.Schema({    //object schema created from which model class generated
+var blogSchema = new mongoose.Schema({
     title: String,
     imageURL: {type: String, default:"www.imageurlfake.com"},
     body: String,
-    author: String,
+    author: {
+        id : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "User"
+            },
+        username: String,
+        displayName: String
+    },
     created: {type: Date, default:Date.now},
     comments:[
         {
