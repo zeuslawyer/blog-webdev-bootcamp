@@ -17,7 +17,7 @@ var userSchema = new mongoose.Schema({
     password: String,      
 });
 
-// PLUGIN PASSPORT
+// PLUGIN PASSPORT to mount passport methods on to the USER model for use by User objects
 userSchema.plugin(passportLocalMongoose); 
 
 // MODEL

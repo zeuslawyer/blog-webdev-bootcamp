@@ -10,8 +10,6 @@ const express = require('express'),
       User = require('./models/users.js'),
       expressSession= require('express-session')
 
-
-
 const dotenv = require('dotenv').config();
     
 const app = express();
@@ -21,7 +19,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOveride('_method'))
 app.use(sanitizer());
 
-// Comments.generateComments();
+// seed comments with:       Comments.generateComments();
 
 //========================
 //configure PASSPORT
@@ -59,28 +57,44 @@ app.get('/blogs', function(req, res, next){
 })
 
 //========================
-// AUTH routes
+// AUTH routes - REGISTER & LOGIN
 //========================
 app.get('/register', (req, res)=>{
     res.render('register.ejs');
 })
 
-app.post('/register', (req, res)=>{
+app.post('/register', (req, res)=> { 
     User.register(
-        new User({username:req.body.username}),
-        req.body.password,
-        function(err, newUser) {
+        new User({username:req.body.username})
+        ,req.body.password
+        ,function(err, newUser) {
             if (err) { 
                 console.log(err)
                 return res.send('Error registering new User. ' + err.message +'.')
             } 
             passport.authenticate("local")(req, res, ()=>{
-                // res.redirect('/blogs')
-                res.send(newUser)
+                res.redirect('/blogs')
+                // res.send(newUser)
             })
         }
     );
 });
+
+app.get('/login', (req, res)=>{
+    res.render('login.ejs');
+})
+
+app.post('/login'
+    , passport.authenticate('local', 
+    {
+        successRedirect: '/blogs',
+        failureRedirect: '/login',
+        failureMessage: 'LOGIN FAILED'
+    }
+    )
+    , (req, res)=>{ }
+);
+
 
 
 //========================
