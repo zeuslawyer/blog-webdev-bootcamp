@@ -39,19 +39,22 @@
 
     <div class="ui main text container segment ">
         <h3>Comments:</h3>   
-        <% blog.comments.reverse().forEach(function(comment){   %>
-            <p> 
-                <%- comment.content %>  <br/>
-                <span class="blog-date show-blog"> 
-                    <em> 
-                        <b>
-                          <a href="/<%= comment.author.id %>"><%= comment.author.displayName %> </a>  
-                        </b>, on <%= comment.created.toDateString() %> 
-                    </em> 
-                </span>
-            </p>  
-        <% }) %>
-        
+        <% if (blog.comments.length ===0) { %>
+            <p>No comments yet.</p>
+        <% } else { %>
+            <% blog.comments.reverse().forEach(function(comment){   %>
+                <p> 
+                    <%- comment.content %>  <br/>
+                    <span class="blog-date show-blog"> 
+                        <em> 
+                            <b>
+                            <a href="/<%= comment.author.id %>"><%= comment.author.displayName %> </a>  
+                            </b>, on <%= comment.created.toDateString() %> 
+                        </em> 
+                    </span>
+                </p>  
+            <% }) %>
+        <% } %>
     </div>
    
 

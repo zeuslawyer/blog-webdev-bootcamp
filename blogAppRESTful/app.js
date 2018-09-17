@@ -206,7 +206,7 @@ app.delete('/blogs/:id', isUserAuthenticated, checkUserIsAuthor,  (req, res, nex
 // SHOW route - individual blogs
 //========================
 
-app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
+app.get('/blogs/:id',  (req, res, next) => {
     Blog.findById(req.params.id)
         .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
         .exec(function (err, retrievedBlog) {
