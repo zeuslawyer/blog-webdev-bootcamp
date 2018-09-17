@@ -113,7 +113,6 @@ app.get('/logout', (req, res)=> {
 //========================
 // NEW BLOG FORM => blogs/new 
 app.get('/blogs/new', isUserAuthenticated, (req, res, next) => {
-    console.log('req.user is --> ' + req.user)
     // res.send('This is form for new blogs'); 
     res.render('new.ejs');
 
@@ -124,8 +123,6 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
     let blog = req.body.blog; // req.body.blog is an object & each key is the name attribute from the form (new.ejs)
     //sanitize
     blog.body = req.sanitize(blog.body);
-    blog.author = req.user;
-    console.log(blog.author.id)
     //handle empty imageURL field in the form
     if (blog.imageURL=='') {
         blog.imageURL = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
@@ -134,6 +131,10 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
                  if(err) {
                      console.log (err);
                  } else {
+                    savedBlog.author.id = req.user._id;
+                    savedBlog.author.username = req.user.username;
+                    savedBlog.author.displayName = req.user.displayName;
+                    savedBlog.save()  
                      //console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
                      res.redirect('/blogs');
                  }
@@ -149,7 +150,7 @@ app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
                 res.send(`DB retrieve for path ${req.url} didnt work`);
             } else {
                 // res.send(blogToEdit
-                res.render('show-single-blog.ejs', {blog: retrievedBlog, authorID: retrievedBlog.author.id})
+                res.render('show-single-blog.ejs', {blog: retrievedBlog})
             }
         });
 });
@@ -221,9 +222,6 @@ app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
 app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
     let newComment = req.body.comment
     newComment.content = req.sanitize(newComment.content);
-    console.log("TAKE 1: ", req.user._id)
-    console.log("TAKENake 1: ", req.user)
-    console.log("COMMENT TAKE 1: ", newComment)
 
     //store comment against blogpost
     Blog.findById(req.params.id, (err, returnedBlog)=>{
@@ -237,10 +235,7 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
                     comment.author.id = req.user._id;
                     comment.author.username = req.user.username;
                     comment.author.displayName = req.user.displayName;
-                    console.log("TAKE 2: ", req.user._id)
-                    console.log("TAKENake 2: ", req.user)
                     comment.save();
-                    console.log("COMMENT TAKE 2: ", comment)
                     returnedBlog.comments.push(comment);
                     returnedBlog.save();
                     res.redirect('/blogs/' + returnedBlog._id );

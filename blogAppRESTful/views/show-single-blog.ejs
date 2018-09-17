@@ -8,8 +8,12 @@
         <div class="item ">
             <img src="<%= blog.imageURL %>" alt="" class="ui centered rounded image segment >
             <div class="content">
-                <span>by  <%= blog.author.displayName  %> at  <%=  %></span>
-                <p><span class="blog-date show-blog"><%= blog.created.toDateString() %></span></p> 
+                <span>by  
+                    <a href="/<%= blog.author.id %>"> <%= blog.author.displayName  %> </a>
+                </span>
+                <span class="blog-date show-blog">
+                    <p><%= blog.created.toDateString() %></p> 
+                </span>
             </div>
             <div class="description">
                 <p> <%-blog.body %></p>
