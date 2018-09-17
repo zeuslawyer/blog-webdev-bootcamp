@@ -2,7 +2,7 @@
 
 <div class="ui main text container segment show"> 
      <div class="ui huge header"> 
-         <h1><%= blog.title%></h1> 
+         <h1><%= blog.title %></h1> 
     </div>
     <div class="ui top attached ">
         <div class="item ">
@@ -18,15 +18,19 @@
             <div class="description">
                 <p> <%-blog.body %></p>
             </div>
-            <div>
-                <form class="ui form" action="/blogs/<%= blog._id %>?_method=DELETE" method ="POST">
-                    <a class="positive mini ui button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  
-                    
-                    <!-- Either button or input works! -->
-                    <button class="ui red danger mini button">DELETE</button>
+            
+            <% if (currentUser && blog.author.id.equals(currentUser._id)) {  %>
+                <div>
+                    <form class="ui form" action="/blogs/<%= blog._id %>?_method=DELETE" method ="POST">
+                        <a class="positive mini ui button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  
+                        
+                        <!-- Either button or input works! -->
+                        <button class="ui red danger mini button">DELETE</button>
 
-                </form>    
-            </div>
+                    </form>    
+                </div>
+            <%  }  %>
+                
             <div class = "">
                 <a href="/blogs/<%= blog._id %>/comments/new" >Leave a comment</a>
             </div>

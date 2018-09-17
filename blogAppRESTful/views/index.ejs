@@ -26,14 +26,14 @@
                 <p> <%- blog.body.substring(0,110) %>  ... </p> <br>
                 <a href="/blogs/<%=blog._id%>" >SHOW MORE</a></p>
                 
-                <% if (currentUser)  {  %>
+                <% if (currentUser && blog.author.id.equals(currentUser._id)) {  %>
                         <div id="form-submit form-edit">
                             <form class="ui form" action="/blogs/<%= blog._id %>?_method=DELETE" method ="POST">
                                 <button class="ui mini red basic button">DELETE</button>
                                 <a class="ui mini blue basic button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  
                             </form>    
                         </div>
-                <% } %> 
+                <% } %>
                 
                 <p class="blog-id"><em>
                         Blog ID: <%= blog.id.substring(0,5)%>

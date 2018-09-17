@@ -177,7 +177,7 @@ app.put('/blogs/:id',isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
 // DELETE / DESTROY BLOG routes
 //========================
 //DELETE / REMOVE blog & its comments
-app.delete('/blogs/:id', isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
+app.delete('/blogs/:id', isUserAuthenticated, checkUserIsAuthor,  (req, res, next)=>{
     // res.send('DELETE ROUTE WORKS')
     Blog.findByIdAndRemove(req.params.id, (err, removedBlog)=>{
         if(err) { 
