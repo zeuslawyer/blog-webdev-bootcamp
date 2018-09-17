@@ -136,7 +136,7 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
                     savedBlog.author.username = req.user.username;
                     savedBlog.author.displayName = req.user.displayName;
                     savedBlog.save()  
-                    console.log(savedBlog.author)
+                    // console.log(savedBlog)
                      //console.log('*******SUCCESSFULLY SAVED TO DB********\n', savedBlog);
                      res.redirect('/blogs');
                  }
@@ -167,7 +167,7 @@ app.put('/blogs/:id',isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
         if (err) {
             res.send(" DB update on PUT route didnt work");
         } else {
-            console.log(updatedBlog.author)
+            // console.log(updatedBlog)
             res.redirect('/blogs/'+req.params.id);
         }
     })
@@ -282,20 +282,12 @@ function isUserAuthenticated(req, res, next) {
     res.redirect('/login')
 }
 
-function viewsData(req, res, next){
-    res.locals.currentUser = req.user;  //if not logged in, then is undefined
-    res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up
-    next();
-}
-
 function checkUserIsAuthor(req, res, next) {
     Blog.findById(req.params.id, (err, retrievedBlog)=> {
         if (err)  {
             res.send(" DB retrieve for Blog object didnt work. Could not verify user and author");
         } else {
             // establish if authenticated user is authorised to edit/delete etc
-            console.log(req.params.id == retrievedBlog._id)
-            console.log(req.user.id, retrievedBlog.author)
             if ( retrievedBlog.author.id && retrievedBlog.author.id.equals(req.user._id)) {
                 // res.render('edit.ejs', {blog: retrievedBlog})
                 next();
@@ -306,6 +298,12 @@ function checkUserIsAuthor(req, res, next) {
             }
         }
     });
+}
+
+function viewsData(req, res, next){
+    res.locals.currentUser = req.user;  //if not logged in, then is undefined
+    res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up
+    next();
 }
 
 //========================  
