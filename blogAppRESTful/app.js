@@ -146,15 +146,20 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
 // EDIT BLOG routes
 //========================
 // EDIT BLOG - create edit form and route to it
-app.get('/blogs/:id/edit', isUserAuthenticated, (req, res, next)=>{
+app.get('/blogs/:id/edit', isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
     // res.send('EDIT PAGE');
-    Blog.findById(req.params.id, (err, blogToEdit)=> {
-        if (err)  {
-            res.send(" DB retrieve for EDIT didnt work");
-        } else {
-            res.render('edit.ejs', {blog: blogToEdit})
-        }
-    });
+    // Blog.findById(req.params.id, (err, blogToEdit)=> {
+    //     if (err)  {
+    //         res.send(" DB retrieve for EDIT didnt work");
+    //     } else {
+    //         res.render('edit.ejs', {blog: blogToEdit})
+    //     }
+    // });
+    
+    Blog.findById(req.params.id, function(err, blogToEdit) { 
+        res.render('edit.ejs', {blog: blogToEdit})
+    })
+    
 })
 
 //UPDATE BLOG - update db and redirect to show page for that updated blog
@@ -284,6 +289,24 @@ function viewsData(req, res, next){
     res.locals.currentUser = req.user;  //if not logged in, then is undefined
     res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up
     next();
+}
+
+function checkUserIsAuthor(req, res, next) {
+    Blog.findById(req.params.id, (err, retrievedBlog)=> {
+        if (err)  {
+            res.send(" DB retrieve for Blog object didnt work. Could not verify user and author");
+        } else {
+            // establish if authenticated user is authorised to edit/delete etc
+            if (retrievedBlog.author.id && retrievedBlog.author.id.equals(req.user._id)) {
+                // res.render('edit.ejs', {blog: retrievedBlog})
+                console.log('Yes, you are authorised')
+                next();
+            } else {
+                // res.send ('you are not authorised to do this.')
+                res.redirect('back');
+            }
+        }
+    });
 }
 
 //========================  
