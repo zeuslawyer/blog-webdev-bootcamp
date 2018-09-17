@@ -12,7 +12,7 @@ mongoose.connect(process.env.DB_HOST, function(err){
 var commentSchema = new mongoose.Schema({    
     content: String,
     author: {
-        id : {
+        id: {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: "User"
             },
@@ -31,9 +31,6 @@ module.exports = Comment;
 //
 // function to seed comments on server start
 //
-
-
-
 
 // var comment = {
 //     content: 'This is a test auto-generated comment #4',

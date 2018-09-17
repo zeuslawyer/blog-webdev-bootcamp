@@ -38,7 +38,7 @@ passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(viewsData); //mounted on all routes to pass data into views/templates
+app.use(viewsData); //mounted on all routes to pass User data into views/templates
 
 //========================
 // routing - routes - RESTful
@@ -221,7 +221,9 @@ app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
 app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
     let newComment = req.body.comment
     newComment.content = req.sanitize(newComment.content);
-    newComment.author = req.user;
+    console.log("TAKE 1: ", req.user._id)
+    console.log("TAKENake 1: ", req.user)
+    console.log("COMMENT TAKE 1: ", newComment)
 
     //store comment against blogpost
     Blog.findById(req.params.id, (err, returnedBlog)=>{
@@ -230,8 +232,15 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
         } else {
             Comment.create(newComment, (err, comment)=> {
                 if(err) {
-                    res.send('error saving new comment')
+                    res.send('error sing new comment')
                 } else {
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    comment.author.displayName = req.user.displayName;
+                    console.log("TAKE 2: ", req.user._id)
+                    console.log("TAKENake 2: ", req.user)
+                    comment.save();
+                    console.log("COMMENT TAKE 2: ", comment)
                     returnedBlog.comments.push(comment);
                     returnedBlog.save();
                     res.redirect('/blogs/' + returnedBlog._id );
@@ -248,13 +257,11 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
 //========================
 
 function isUserAuthenticated(req, res, next) {
-    // console.log('=======\n' +req.path + '\n')
-    
+    // console.log('=======\n' +req.path + '\n') 
     /*
         store the current req path in the session so it can be returned to  
         see : https://stackoverflow.com/questions/13335881/redirecting-to-previous-page-after-authentication-in-node-js-using-passport-js
     */
-
     req.session.returnPath = req.path
 
     if (req.isAuthenticated()){
