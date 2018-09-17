@@ -41,7 +41,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use(viewsData); //mounted on all routes to pass User data into views/templates
 
 //========================
-// routing - routes - RESTful
+// routing - ROOT routes - RESTful
 //========================
 app.get('/', (req, res, next) => {
     // res.send('This is the Home Page.');
@@ -107,10 +107,27 @@ app.get('/logout', (req, res)=> {
     res.redirect('/');
 })
 
+//========================
+// SHOW route - individual blogs
+//========================
+
+app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
+    Blog.findById(req.params.id)
+        .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
+        .exec(function (err, retrievedBlog) {
+            if (err)  {
+                res.send(`DB retrieve for path ${req.url} didnt work`);
+            } else {
+                // res.send(blogToEdit
+                res.render('show-single-blog.ejs', {blog: retrievedBlog})
+            }
+        });
+});
 
 //========================
-// new and edit blog routes
+// NEW BLOG  routes
 //========================
+
 // NEW BLOG FORM => blogs/new 
 app.get('/blogs/new', isUserAuthenticated, (req, res, next) => {
     // res.send('This is form for new blogs'); 
@@ -130,7 +147,7 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
     Blog.create(blog, function(err, savedBlog) {
                  if(err) {
                      console.log (err);
-                 } else {
+                 } else { 
                     savedBlog.author.id = req.user._id;
                     savedBlog.author.username = req.user.username;
                     savedBlog.author.displayName = req.user.displayName;
@@ -141,20 +158,9 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
              });
 });
 
-// SHOW ROUTE - show data about each Post
-app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
-    Blog.findById(req.params.id)
-        .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
-        .exec(function (err, retrievedBlog) {
-            if (err)  {
-                res.send(`DB retrieve for path ${req.url} didnt work`);
-            } else {
-                // res.send(blogToEdit
-                res.render('show-single-blog.ejs', {blog: retrievedBlog})
-            }
-        });
-});
-
+//========================
+// EDIT BLOG routes
+//========================
 // EDIT BLOG - create edit form and route to it
 app.get('/blogs/:id/edit', isUserAuthenticated, (req, res, next)=>{
     // res.send('EDIT PAGE');
@@ -181,6 +187,9 @@ app.put('/blogs/:id',isUserAuthenticated, (req, res, next)=>{
     })
 });
 
+//========================
+// DELETE / DESTROY BLOG routes
+//========================
 //DELETE / REMOVE blog & its comments
 app.delete('/blogs/:id', isUserAuthenticated, (req, res, next)=>{
     // res.send('DELETE ROUTE WORKS')
@@ -193,10 +202,12 @@ app.delete('/blogs/:id', isUserAuthenticated, (req, res, next)=>{
             let commentRefs = removedBlog.comments;
             if (commentRefs) {
                 commentRefs.forEach(function(reference){
-                    Comment.findByIdAndRemove(reference, (err)=>{
+                    Comment.findByIdAndRemove(reference, (err, deletedComment)=>{
                         if (err) {
                             res.send('error deleting comment(s) of deleted blog')
-                        } 
+                        } else {
+                            console.log(`and deleted ${removedBlog._id}'s associated comment with id ${deletedComment._id} from database`)
+                        }                 
                     })
                 })
             }
@@ -205,7 +216,9 @@ app.delete('/blogs/:id', isUserAuthenticated, (req, res, next)=>{
     });
 });
 
-
+//========================
+// NEW COMMENT  routes
+//========================
 // COMMENTS - new comment
 app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
         // res.send('THIS IS THE NEW COMMENT PAGE');
