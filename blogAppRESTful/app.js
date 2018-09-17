@@ -107,22 +107,6 @@ app.get('/logout', (req, res)=> {
     res.redirect('/');
 })
 
-//========================
-// SHOW route - individual blogs
-//========================
-
-app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
-    Blog.findById(req.params.id)
-        .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
-        .exec(function (err, retrievedBlog) {
-            if (err)  {
-                res.send(`DB retrieve for path ${req.url} didnt work`);
-            } else {
-                // res.send(blogToEdit
-                res.render('show-single-blog.ejs', {blog: retrievedBlog})
-            }
-        });
-});
 
 //========================
 // NEW BLOG  routes
@@ -217,9 +201,26 @@ app.delete('/blogs/:id', isUserAuthenticated, (req, res, next)=>{
 });
 
 //========================
+// SHOW route - individual blogs
+//========================
+
+app.get('/blogs/:id', isUserAuthenticated, (req, res, next) => {
+    Blog.findById(req.params.id)
+        .populate('comments')  //alters comments property of blog to show the list of comments and not just _id ref
+        .exec(function (err, retrievedBlog) {
+            if (err)  {
+                res.send(`DB retrieve for path ${req.url} didnt work`);
+            } else {
+                // res.send(blogToEdit
+                res.render('show-single-blog.ejs', {blog: retrievedBlog})
+            }
+        });
+});
+
+//========================
 // NEW COMMENT  routes
 //========================
-// COMMENTS - new comment
+// COMMENTS - new comment form
 app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
         // res.send('THIS IS THE NEW COMMENT PAGE');
         Blog.findById(req.params.id, function(err, returnedBlog){
