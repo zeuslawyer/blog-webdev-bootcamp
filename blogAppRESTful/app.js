@@ -261,7 +261,19 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
     })
 
 })
-
+//========================
+// COMMENT- EDIT/UPDATE/DELETE  routes
+//========================
+app.get('/blogs/:id/comments/:commId/edit',  (req, res) => {
+    res.send('THIS IS COMMENT EDIT PAGE');
+    // Blog.findById(req.params.id, function(err, returnedBlog){
+    //     if (err) {
+    //         console.log('DB error in new comment route\n===============\n', err)
+    //     } else {
+    //         res.render('./newComment.ejs', {blog:returnedBlog})
+    //     }
+    // });
+});
 
 //========================
 // MIDDLEWARE
@@ -302,7 +314,7 @@ function checkUserIsAuthor(req, res, next) {
 
 function viewsData(req, res, next){
     res.locals.currentUser = req.user;  //if not logged in, then is undefined
-    res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up
+    res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up on upper right
     next();
 }
 

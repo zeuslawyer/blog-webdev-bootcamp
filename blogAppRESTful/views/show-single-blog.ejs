@@ -52,6 +52,12 @@
                             </b>, on <%= comment.created.toDateString() %> 
                         </em> 
                     </span>
+                    <a href="#">
+                        <i class="trash alternate outline icon"></i>
+                    </a>
+                    <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">
+                        <i class="edit outline icon"></i>
+                    </a>
                 </p>  
             <% }) %>
         <% } %>
