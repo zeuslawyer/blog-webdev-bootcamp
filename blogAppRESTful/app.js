@@ -265,14 +265,15 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
 // COMMENT- EDIT/UPDATE/DELETE  routes
 //========================
 app.get('/blogs/:id/comments/:commId/edit',  (req, res) => {
-    res.send('THIS IS COMMENT EDIT PAGE');
-    // Blog.findById(req.params.id, function(err, returnedBlog){
-    //     if (err) {
-    //         console.log('DB error in new comment route\n===============\n', err)
-    //     } else {
-    //         res.render('./newComment.ejs', {blog:returnedBlog})
-    //     }
-    // });
+    // res.send('THIS IS COMMENT EDIT PAGE');
+    Comment.findById(req.params.commId, function(err, returnedComment){
+        if (err) {
+            console.log('DB error in new comment route\n===============\n', err)
+        } else {
+            console.log(returnedComment.content)
+            res.render('./editComment.ejs', {comment:returnedComment})
+        }
+    });
 });
 
 //========================

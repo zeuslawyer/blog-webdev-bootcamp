@@ -1,0 +1,31 @@
+
+
+<% include ./partials/header.ejs %>
+
+<div class="new main text container segment"> 
+     <div class="ui huge header">
+        <h1> Edit your comment</h1> 
+    </div>
+
+    <div>
+        <form class="ui form" action="/blogs/blog._id/comments/<%=comment._id%>" method="POST">
+            <div class="field">
+                <label >Your Comment</label>
+                <textarea name="comment[content]" required id="" cols="30" rows="2" > <%= comment.content %>
+                </textarea>
+                
+            </div>
+            
+                <div class="field">
+                    <label for="comment[author]">Author Name</label>
+                    <input type="text"  name="comment[author]" value = <%= comment.author.displayName %> disabled>
+                </div>
+            
+            <input class="positive ui button " type="submit" value="Update">
+            
+        </form>
+    </div>
+
+    <% include ./partials/footer.ejs %>
+
+</div>    
