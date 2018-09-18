@@ -229,7 +229,7 @@ app.get('/blogs/:id/comments/new', isUserAuthenticated, (req, res, next)=>{
             if (err) {
                 console.log('DB error in new comment route\n===============\n', err)
             } else {
-                res.render('./newComment.ejs', {blog:returnedBlog})
+                res.render('./comments/newComment.ejs', {blog:returnedBlog})
             }
         });
 });
@@ -262,16 +262,26 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
 
 })
 //========================
-// COMMENT- EDIT/UPDATE/DELETE  routes
+// COMMENTS- EDIT/UPDATE/DELETE  routes
 //========================
 app.get('/blogs/:id/comments/:commId/edit',  (req, res) => {
     // res.send('THIS IS COMMENT EDIT PAGE');
     Comment.findById(req.params.commId, function(err, returnedComment){
         if (err) {
-            console.log('DB error in new comment route\n===============\n', err)
+            console.log('DB error in edit comment route\n===============\n', err)
         } else {
-            console.log(returnedComment.content)
-            res.render('./editComment.ejs', {comment:returnedComment})
+            res.render('./comments/editComment.ejs', {comment:returnedComment, blogID: req.params.id })
+        }
+    });
+});
+
+app.put('/blogs/:id/comments/:commId', (req, res) => {
+    Comment.findByIdAndUpdate(req.params.commId, req.body.comment, {new: true}, (err, updatedComment) => {
+        if (err) {
+            res.send('DB error in updating comment using PUT')
+        } else {
+            // console.log(updatedComment)
+            res.redirect("/blogs/" + req.params.id)
         }
     });
 });
