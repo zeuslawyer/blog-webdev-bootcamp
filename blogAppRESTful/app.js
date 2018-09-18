@@ -286,6 +286,18 @@ app.put('/blogs/:id/comments/:commId', (req, res) => {
     });
 });
 
+app.delete ('/blogs/:id/comments/:commId', (req, res) => {
+    // res.send('delete route hit')
+    Comment.findByIdAndRemove(req.params.commId, (err, removedComment)=> {
+        if(err) {
+            res.send('error deleting comment in delete route');
+        } else {
+            // console.log('>>>>\n' + removedComment.content);
+            res.redirect("/blogs/" + req.params.id)
+        }
+    });
+});
+
 //========================
 // MIDDLEWARE
 //========================

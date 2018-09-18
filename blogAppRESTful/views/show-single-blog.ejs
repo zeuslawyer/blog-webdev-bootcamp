@@ -43,22 +43,30 @@
             <p>No comments yet.</p>
         <% } else { %>
             <% blog.comments.reverse().forEach(function(comment){   %>
-                <p> 
-                    <%- comment.content %>  <br/>
-                    <span class="blog-date show-blog"> 
-                        <em> 
-                            <b>
-                            <a href="/<%= comment.author.id %>"><%= comment.author.displayName %> </a>  
-                            </b>, on <%= comment.created.toDateString() %> 
-                        </em> 
-                    </span>
-                    <a href="#">
-                        <i class="trash alternate outline icon"></i>
-                    </a>
-                    <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">
-                        <i class="edit outline icon"></i>
-                    </a>
-                </p>  
+                <div>
+                    <p> 
+                        <%- comment.content %>  <br/>
+                        <span class="blog-date show-blog"> 
+                            <em> 
+                                <b>
+                                <a href="/<%= comment.author.id %>"><%= comment.author.displayName %> </a>  
+                                </b>, on <%= comment.created.toDateString() %> 
+                            </em> 
+                        </span>
+                    </p>
+                    <form action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
+                       
+                        <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">
+                            <i class="edit outline icon"></i>
+                        </a>
+
+                        <button class="trash alternate outline icon"><i class="trash alternate outline icon"></i></button>
+                    
+                    </form>
+                        
+                        <hr>
+                      
+            </div>
             <% }) %>
         <% } %>
     </div>
