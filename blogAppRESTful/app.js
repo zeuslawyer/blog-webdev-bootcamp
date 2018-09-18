@@ -147,7 +147,7 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
 // EDIT BLOG routes
 //========================
 // EDIT BLOG - create edit form and route to it
-app.get('/blogs/:id/edit', isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
+app.get('/blogs/:id/edit', isUserAuthenticated, checkBlogAuthor, (req, res, next)=>{
     // res.send('EDIT PAGE');
     Blog.findById(req.params.id, (err, blogToEdit)=> {
         if (err)  {
@@ -159,7 +159,7 @@ app.get('/blogs/:id/edit', isUserAuthenticated, checkUserIsAuthor, (req, res, ne
 })
 
 //UPDATE BLOG - update db and redirect to show page for that updated blog
-app.put('/blogs/:id',isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
+app.put('/blogs/:id',isUserAuthenticated, checkBlogAuthor, (req, res, next)=>{
     // res.send('PUT METHOD AND UPDATE ROUTE WORKING');
     //sanitize:
     req.body.blog.body = req.sanitize(req.body.blog.body);
@@ -177,7 +177,7 @@ app.put('/blogs/:id',isUserAuthenticated, checkUserIsAuthor, (req, res, next)=>{
 // DELETE / DESTROY BLOG routes
 //========================
 //DELETE / REMOVE blog & its comments
-app.delete('/blogs/:id', isUserAuthenticated, checkUserIsAuthor,  (req, res, next)=>{
+app.delete('/blogs/:id', isUserAuthenticated, checkBlogAuthor,  (req, res, next)=>{
     // res.send('DELETE ROUTE WORKS')
     Blog.findByIdAndRemove(req.params.id, (err, removedBlog)=>{
         if(err) { 
@@ -264,7 +264,7 @@ app.post('/blogs/:id/comments', isUserAuthenticated, (req, res, next)=>{
 //========================
 // COMMENTS- EDIT/UPDATE/DELETE  routes
 //========================
-app.get('/blogs/:id/comments/:commId/edit',  (req, res) => {
+app.get('/blogs/:id/comments/:commId/edit', isUserAuthenticated , checkCommentAuthor,  (req, res) => {
     // res.send('THIS IS COMMENT EDIT PAGE');
     Comment.findById(req.params.commId, function(err, returnedComment){
         if (err) {
@@ -275,7 +275,7 @@ app.get('/blogs/:id/comments/:commId/edit',  (req, res) => {
     });
 });
 
-app.put('/blogs/:id/comments/:commId', (req, res) => {
+app.put('/blogs/:id/comments/:commId', isUserAuthenticated, checkCommentAuthor, (req, res) => {
     Comment.findByIdAndUpdate(req.params.commId, req.body.comment, {new: true}, (err, updatedComment) => {
         if (err) {
             res.send('DB error in updating comment using PUT')
@@ -286,13 +286,32 @@ app.put('/blogs/:id/comments/:commId', (req, res) => {
     });
 });
 
-app.delete ('/blogs/:id/comments/:commId', (req, res) => {
+app.delete ('/blogs/:id/comments/:commId', isUserAuthenticated, checkCommentAuthor, (req, res) => {
     // res.send('delete route hit')
+
+    let findCommentAndDeleteInBlog = function(){
+        Blog.find({_id: req.params.id}, (err, blog)=>{
+            //NB blog is an array because .find returns an array
+            if (err) {
+                console.log('error finding blog in app.delete ROUTE')
+            } else {
+                //get index of cthe comment in the blog's comments array...
+                let result = blog[0].comments.indexOf(req.params.commId);
+                console.log('Comment INDEX for comment in Blog document is -> ' + result + `out of ${blog[0].comments.length} comments`)
+                //remove it from the array, so that blog doesnt have excess comments in its array
+                blog[0].comments.splice(result, 1)
+                console.log('deleted comment from the blogs comments array @index -> ' + result + `...and now ${blog[0].comments.length} comments remain`)
+                return result;
+            }
+        });
+    }
+
     Comment.findByIdAndRemove(req.params.commId, (err, removedComment)=> {
         if(err) {
             res.send('error deleting comment in delete route');
         } else {
             // console.log('>>>>\n' + removedComment.content);
+            findCommentAndDeleteInBlog();
             res.redirect("/blogs/" + req.params.id)
         }
     });
@@ -317,7 +336,7 @@ function isUserAuthenticated(req, res, next) {
     res.redirect('/login')
 }
 
-function checkUserIsAuthor(req, res, next) {
+function checkBlogAuthor(req, res, next) {
     Blog.findById(req.params.id, (err, retrievedBlog)=> {
         if (err)  {
             res.send(" DB retrieve for Blog object didnt work. Could not verify user and author");
@@ -328,8 +347,25 @@ function checkUserIsAuthor(req, res, next) {
                 next();
             } else {
                 // res.send ('you are not authorised to do this.')
-                console.log(`${req.user.displayName}, you are not authorised to do this to ${retrievedBlog.author.id}.`)
+                console.log(`${req.user.displayName}, you are not authorised to do this to ${retrievedBlog}.`)
                 res.redirect('back');
+            }
+        }
+    });
+}
+
+function checkCommentAuthor(req, res, next) {
+    Comment.findById(req.params.commId, (err, retrievedComment)=> {
+        if (err)  {
+            res.send(" DB retrieve for Comment object didnt work. Could not verify user and authorship");
+        } else {
+            // console.log(retrievedComment)
+            // establish if authenticated user is authorised to edit/delete etc
+            if ( req.user && retrievedComment.author.id.equals(req.user._id)) {
+                next();
+            } else {
+                // console.log(`${req.user.displayName}, you are not authorised to do this to ${retrievedComment}.`)
+                res.send ('you are not authorised to edit/delete comments.')
             }
         }
     });
@@ -347,4 +383,4 @@ function viewsData(req, res, next){
 const port = process.env.PORT || 3000
 app.listen(port, function(){
     console.log (`Server stared on Port ${port}`);
-})
+});
