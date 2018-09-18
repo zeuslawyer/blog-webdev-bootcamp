@@ -42,19 +42,20 @@ div:last-child p.blog-id {
     font-size: 0.8em;
 }
 
-i.trash.icon {
-    font-size: 1.1em;
-    color: #cc1041
-}
 i.edit {
     /* float: right; */
     font-size: 1.1em;
     color: #545454
 }
+
 button.trash.icon{
-    display: inline;
+    display: block;
     border: 0;
-    float:right
+    float:right;
+}
+i.trash.icon {
+    font-size: 1.1em;
+    color: #cc1041
 }
 
 

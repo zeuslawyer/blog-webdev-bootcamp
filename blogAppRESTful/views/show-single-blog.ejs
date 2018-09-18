@@ -54,17 +54,20 @@
                             </em> 
                         </span>
                     </p>
-                    <form action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
-                       
-                        <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">
-                            <i class="edit outline icon"></i>
-                        </a>
 
-                        <button class="trash alternate outline icon"><i class="trash alternate outline icon"></i></button>
-                    
-                    </form>
+                    <% if (currentUser && comment.author.id.equals(currentUser._id)) {  %>
+                        <form action="/blogs/<%= blog._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                         
-                        <hr>
+                            <a href="/blogs/<%= blog._id %>/comments/<%= comment._id %>/edit">
+                                <i class="edit outline icon"></i>
+                            </a>
+
+                            <button class="trash alternate outline icon"><i class="trash alternate outline icon"></i></button>
+                        
+                        </form>
+                    <% } %>    
+                        
+                    <hr>
                       
             </div>
             <% }) %>
