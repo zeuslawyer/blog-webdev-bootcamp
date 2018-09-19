@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 /**  Mongoose - CONNECT */
 mongoose.connect(process.env.DB_URL || process.env.DB_LOCAL, { useNewUrlParser: true }, function(err){
     if(err){
-        console.log('DB CONNECTION ERROR!')
+        console.log('DB CONNECTION ERROR!   - comments model')
     }
 }, { useNewUrlParser: true });
 

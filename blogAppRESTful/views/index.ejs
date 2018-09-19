@@ -14,8 +14,9 @@
             <div>
                 <hr>
                 <h2> <%=blog.title %></h2>
-          
-                <img src="<%= blog.imageURL %>" alt="blog-post-image">
+                <div class="item " style="" >
+                    <img src="<%= blog.imageURL %>" alt="blog-post-image" class="ui rounded image segment"  >
+                </div>
                 
                 <p>by: 
                     <a href="/<%= blog.author.id %>">

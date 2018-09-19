@@ -9,9 +9,9 @@ const express = require('express'),
       localStrategy = require('passport-local'),
       User = require('./models/users.js'),
       expressSession= require('express-session'),
+      getImage = require('./models/imagesDB.js'),
       {isUserAuthenticated, checkBlogAuthor, checkCommentAuthor, viewsData} = require('./middleware/functions.js')  
-
-// const dotenv = require('dotenv').config();  // not needed for heroku deployment
+    
     
 const app = express();
 
@@ -127,7 +127,8 @@ app.post('/blogs', isUserAuthenticated, (req, res, next) => {
     blog.body = req.sanitize(blog.body);
     //handle empty imageURL field in the form
     if (blog.imageURL=='') {
-        blog.imageURL = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
+        let stockImage = 'https://images.unsplash.com/photo-1521335751419-603f61523713?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=da93af6c8bb9ba6b964fbb102f1f44f3&auto=format&fit=crop&w=800&q=60';
+        blog.imageURL = getImage() || stockImage;
     }
     Blog.create(blog, function(err, savedBlog) {
                  if(err) {
@@ -324,5 +325,5 @@ app.delete ('/blogs/:id/comments/:commId', isUserAuthenticated, checkCommentAuth
 //========================
 const port = process.env.PORT || 3000
 app.listen(port, function(){
-    console.log (`Server stared on Port ${port}. \nConnecting to to DB ${process.env.DB_URL}.` );
+    console.log (`Server stared on Port ${port}. \nConnecting to DB: ${process.env.DB_URL || process.env.DB_LOCAL}.` );
 });
