@@ -11,7 +11,7 @@ const express = require('express'),
       expressSession= require('express-session'),
       {isUserAuthenticated, checkBlogAuthor, checkCommentAuthor, viewsData} = require('./middleware/functions.js')  
 
-const dotenv = require('dotenv').config();
+// const dotenv = require('dotenv').config();  // not needed for heroku deployment
     
 const app = express();
 
