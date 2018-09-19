@@ -324,5 +324,5 @@ app.delete ('/blogs/:id/comments/:commId', isUserAuthenticated, checkCommentAuth
 //========================
 const port = process.env.PORT || 3000
 app.listen(port, function(){
-    console.log (`Server stared on Port ${port}. \nConnected to DB ${process.env.DB_URL}.` );
+    console.log (`Server stared on Port ${port}. \nConnecting to to DB ${process.env.DB_URL}.` );
 });

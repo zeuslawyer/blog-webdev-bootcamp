@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
 /**  Mongoose - CONNECT */
-mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }, function(err){
+mongoose.connect(process.env.DB_URL || process.env.DB_LOCAL ,  { useNewUrlParser: true }, function(err){
     if(err){
         console.log('DB CONNECTION ERROR!')
     }
-}, { useNewUrlParser: true });
+});
 
 
 //SCHEMA
