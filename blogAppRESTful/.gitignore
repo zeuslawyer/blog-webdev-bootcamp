@@ -1,2 +1,6 @@
+*.env
+
 # ignore folders
 /node_modules
+
+

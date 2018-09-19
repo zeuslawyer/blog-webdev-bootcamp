@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv').config();
 
 /**  Mongoose - CONNECT */
-mongoose.connect(process.env.DB_HOST, function(err){
+mongoose.connect(process.env.DB_URL, { useNewUrlParser: true }, function(err){
     if(err){
         console.log('DB CONNECTION ERROR!')
     }
