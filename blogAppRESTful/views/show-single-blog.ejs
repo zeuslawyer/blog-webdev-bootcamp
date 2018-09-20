@@ -19,7 +19,7 @@
                 <p> <%-blog.body %></p>
             </div>
             
-            <% if (currentUser && blog.author.id.equals(currentUser._id)) {  %>
+            <% if (currentUser && (blog.author.id.equals(currentUser._id) || adminLoggedIn) ) {  %>
                 <div>
                     <form class="ui form" action="/blogs/<%= blog._id %>?_method=DELETE" method ="POST">
                         <a class="positive mini ui button "href="/blogs/<%=blog._id%>/edit">EDIT </a>  

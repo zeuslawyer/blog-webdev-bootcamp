@@ -13,6 +13,6 @@ let getImage = () => {
     return images[Math.floor(Math.random()*images.length)];
 }
 
-console.log(getImage())
+// console.log(getImage())
 
 module.exports = getImage;

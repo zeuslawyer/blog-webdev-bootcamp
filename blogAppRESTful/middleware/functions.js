@@ -58,11 +58,17 @@ middleware.checkCommentAuthor = (req, res, next) => {
     });
 };
 
-    middleware.viewsData = (req, res, next) => {
-        res.locals.currentUser = req.user;  //if not logged in, then is undefined
-        res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up on upper right
-        next();
-    };
+middleware.viewsData = (req, res, next) => {
+    res.locals.currentUser = req.user;  //if not logged in, then is undefined
+    
+    if (req.user) {  //if someone logged in, check if admin or not
+        res.locals.adminLoggedIn = req.user.username ==='zp@zp.com' ? true : false ;
+    }
+    console.log('is admin logged in?  ' + (res.locals.adminLoggedIn== true ? true : false ) )
+    
+    res.locals.pathData = req.path; //demo to show how data gets passed- each route shows  up on upper right
+    next();
+};
 
 
 module.exports = middleware;
