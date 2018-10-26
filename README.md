@@ -2,6 +2,8 @@
 
 Each set of exercises / topics falls in its own branch.  switch branches to see code by topic.
 
+**_Note_**:  the functional webapp is _not_ in the master branch, but in the deploymentAndRouters branch.
+
 
 
 # STACK DESCRIPTION
