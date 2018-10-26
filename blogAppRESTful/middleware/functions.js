@@ -29,7 +29,9 @@ middleware.checkBlogAuthor = (req, res, next) => {
             res.send(" DB retrieve for Blog object didnt work. Could not verify user and author");
         } else {
             // e stablish if authenticated user is authorised to edit/delete etc
-            if ( retrievedBlog.author.id && retrievedBlog.author.id.equals(req.user._id)) {
+            if ( res.locals.adminLoggedIn || 
+                    (retrievedBlog.author.id && retrievedBlog.author.id.equals(req.user._id))
+                ) {
                 // res.render('edit.ejs', {blog: retrievedBlog})
                 next();
             } else {
