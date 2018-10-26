@@ -28,3 +28,4 @@ Each set of exercises / topics falls in its own branch.  switch branches to see 
 3) [Comments + Post without edit functionality](blogAppRESTful/screenshots/blog3.png)
 4) [Main page with SHOW MORE](blogAppRESTful/screenshots/blog2.png)
 5) [NavBar with Main Page and Picture Functionality](blogAppRESTful/screenshots/blog1.png)
+6) [Edit and Delete Functionality only for logged in && author] (blogAppRESTful/screenshots/blog6.png)
