@@ -24,7 +24,7 @@ Each set of exercises / topics falls in its own branch.  switch branches to see 
 
 # SCREENSHOTS
 [Register/Signup](blogAppRESTful/screenshots/blog5.png)
-[Login] (blogAppRESTful/screenshots/blog4.png)
-[Comments + Post without edit functionality] (blogAppRESTful/screenshots/blog3.png)
-[Main page with SHOW MORE] (blogAppRESTful/screenshots/blog2.png)
-[NavBar with Main Page and Picture Functionality] (blogAppRESTful/screenshots/blog1.png)
+[Login](blogAppRESTful/screenshots/blog4.png)
+[Comments + Post without edit functionality](blogAppRESTful/screenshots/blog3.png)
+[Main page with SHOW MORE](blogAppRESTful/screenshots/blog2.png)
+[NavBar with Main Page and Picture Functionality](blogAppRESTful/screenshots/blog1.png)
