@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-// const dotenv = require('dotenv').config(); // not needed for heroku but needed for local development on local DB
+const dotenv = require('dotenv').config(); // not needed for heroku but needed for local development on local DB
 
 /**  Mongoose - CONNECT */
 
