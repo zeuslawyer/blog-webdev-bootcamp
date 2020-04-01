@@ -1,4 +1,4 @@
-# udemy-webdev-bootcamp
+# blog-webdev-bootcamp
 
 Each set of exercises / topics falls in its own branch.  switch branches to see code by topic.
 
