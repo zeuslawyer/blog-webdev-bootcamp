@@ -1,10 +1,8 @@
 # blog-webdev-bootcamp
 
-Each set of exercises / topics falls in its own branch.  switch branches to see code by topic.
+See the [live demo](https://zubinstestblog.herokuapp.com/). It may take a few minutes for Heroku to wake up!
 
-**_Note_**:  there are several projects (in their branch) and the showcase project is afull stack CRUD blog webapp, and  is  in the deploymentAndRouters branch, and merged into master.
-
-
+**_Note_**:  there are several sub-projects (in each branch) and the showcase project is a full stack CRUD blog webapp, and  is  in the deploymentAndRouters branch, and merged into master.
 
 # STACK DESCRIPTION
 1) built in html, JS, with a node express backend, dynamically rendered with data from the DB
@@ -23,6 +21,7 @@ Each set of exercises / topics falls in its own branch.  switch branches to see 
 5) EDIT and DELETE functionality only for authors of the Comment
 6) Login is required to edit, or delete, but not to read individual blog (SHOW MORE)
 7) add new picture and edit existing picture or post functions
+
 
 # SCREENSHOTS
 1) __REGISTER / SIGNUP__
