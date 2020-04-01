@@ -1,6 +1,6 @@
 # blog-webdev-bootcamp
 
-See the [live demo](https://zubinstestblog.herokuapp.com/). It may take a few minutes for Heroku to wake up!
+See the [live demo](https://zubinstestblog.herokuapp.com/). It may take a few seconds for Heroku to wake up!
 
 **_Note_**:  there are several sub-projects (in each branch) and the showcase project is a full stack CRUD blog webapp, and  is  in the deploymentAndRouters branch, and merged into master.
 
